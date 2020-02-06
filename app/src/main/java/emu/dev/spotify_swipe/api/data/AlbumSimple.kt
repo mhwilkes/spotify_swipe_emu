@@ -18,4 +18,8 @@ data class AlbumSimple(
     val restrictions: Restriction?,
     val type: String?,
     val uri: String?
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "AlbumSimple(album_group=$album_group, album_type=$album_type, artists=${artists?.contentToString()}, available_markets=${available_markets?.contentToString()}, external_urls=${external_urls?.contentToString()}, href=$href, id=$id, images=${images?.contentToString()}, name=$name, release_date=$release_date, release_date_precision=$release_date_precision, restrictions=$restrictions, type=$type, uri=$uri)"
+    }
+}

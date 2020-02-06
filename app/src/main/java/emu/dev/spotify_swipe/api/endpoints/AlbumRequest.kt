@@ -1,23 +1,33 @@
 package emu.dev.spotify_swipe.api.endpoints
 
+import com.google.gson.Gson
 import emu.dev.spotify_swipe.api.data.Album
 import emu.dev.spotify_swipe.api.data.AlbumSimple
 import emu.dev.spotify_swipe.api.data.TrackSimple
 import emu.dev.spotify_swipe.api.spotify.AuthToken
 import emu.dev.spotify_swipe.api.spotify.Request
 import io.ktor.client.HttpClient
+import io.ktor.client.request.accept
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
-class AlbumRequest : Request<AlbumRequest>() {
+class AlbumRequest(val request: Request) {
 
     //TODO implement functionality and return types
 
-    fun requestAlbum(
-        client: HttpClient,
-        token: AuthToken,
+
+    suspend fun requestAlbum(
         id: String,
         market: String? = null
     ): Album? {
-        return null
+        val response = request.client.get<String>("https://api.spotify.com/v1/albums/${id}") {
+            accept(ContentType.Application.Json)
+            contentType(ContentType.Application.Json)
+        }
+
+        return Gson().fromJson(response, Album::class.java)
     }
 
     fun requestAlbumTracks(
