@@ -1,7 +1,5 @@
 package emu.dev.spotify_swipe.api.data
 
-import java.io.Serializable
-
 data class AudioFeature(
     val acousticness: Float?,
     val analysis_url: String?,
@@ -21,4 +19,4 @@ data class AudioFeature(
     val type: String?,
     val uri: String?,
     val valence: Float?
-) : Serializable
+)

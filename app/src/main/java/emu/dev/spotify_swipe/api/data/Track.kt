@@ -1,7 +1,5 @@
 package emu.dev.spotify_swipe.api.data
 
-import java.io.Serializable
-
 data class Track (
     val album: AlbumSimple?,
     val artists: List<ArtistSimple>?,
@@ -23,4 +21,4 @@ data class Track (
     val type: String?,
     val uri: String?,
     val is_local: Boolean?
-) : Serializable
+)

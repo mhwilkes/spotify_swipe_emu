@@ -1,14 +1,12 @@
 package emu.dev.spotify_swipe.api.data
 
-import java.io.Serializable
-
 data class PlaylistSimple(
     val collaborative: Boolean?,
     val description: String?,
-    val externalURL: ExternalURL?,
+    val external_urls: Map<String, String> = mapOf(),
     val href: String?,
     val id: String?,
-    val images: Array<Image>?,
+    val images: List<Image>?,
     val name: String?,
     val owner: UserPublic?,
     val public: Boolean?,
@@ -16,4 +14,4 @@ data class PlaylistSimple(
     val tracks: Collection<Track>?,
     val type: String?,
     val uri: String?
-) : Serializable
+)
