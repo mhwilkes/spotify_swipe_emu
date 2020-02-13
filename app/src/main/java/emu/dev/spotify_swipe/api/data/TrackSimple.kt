@@ -3,12 +3,12 @@ package emu.dev.spotify_swipe.api.data
 import java.io.Serializable
 
 data class TrackSimple(
-    val artists: Array<ArtistSimple>?,
-    val available_markets: Array<String>?,
+    val artists: List<ArtistSimple>?,
+    val available_markets: List<String>?,
     val disc_number: Int?,
     val duration_ms: Int?,
     val explicit: Boolean?,
-    val external_urls: ExternalURL?,
+    val external_urls: Map<String, String> = mapOf(),
     val href: String?,
     val id: String?,
     val is_playable: Boolean?,

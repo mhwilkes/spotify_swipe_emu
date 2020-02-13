@@ -11,7 +11,6 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
-import io.ktor.http.contentType
 
 class AlbumRequest(val request: Request) {
 
@@ -24,9 +23,9 @@ class AlbumRequest(val request: Request) {
     ): Album? {
         val response = request.client.get<String>("https://api.spotify.com/v1/albums/${id}") {
             accept(ContentType.Application.Json)
-            contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer ${request.authToken.token}")
         }
-
+        println(response)
         return Gson().fromJson(response, Album::class.java)
     }
 

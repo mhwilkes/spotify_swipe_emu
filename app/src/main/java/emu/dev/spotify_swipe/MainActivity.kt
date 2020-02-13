@@ -6,13 +6,9 @@ import emu.dev.spotify_swipe.api.endpoints.AlbumRequest
 import emu.dev.spotify_swipe.api.spotify.AuthToken
 import emu.dev.spotify_swipe.api.spotify.Request
 import io.ktor.client.HttpClient
-import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.logging.DEFAULT
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logger
-import io.ktor.client.features.logging.Logging
-import kotlinx.coroutines.MainScope
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -21,28 +17,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val client = HttpClient {
+        val client = HttpClient{
             install(JsonFeature) {
-                serializer = GsonSerializer {
-                    serializeNulls()
-                    disableHtmlEscaping()
-                    setPrettyPrinting()
-                }
+                serializer = KotlinxSerializer()
             }
-            install(Logging) {
-                logger = Logger.DEFAULT
-                level = LogLevel.HEADERS
-            }
+
         }
 
-        MainScope().launch {
+        GlobalScope.launch {
             println(
                 AlbumRequest(
                     Request(
                         client,
-                        AuthToken("BQCJq3cES9EKybMf2PswK3eeMriZ9WCR30hud33F_kUBVNrTXbHaMT96hRzld7Ayg1QSYX3AIu0tGLz8HkAMGetgNWa-xI1oCoWYUOckqcjQZ_jq02PqDK59FIOq8wopicrUvQYR-7NGZB4LJF1XLQJghfpADMlF-pE")
+                        AuthToken("BQACA-QSQavVO9RUztwVAMkGoFoA0WSbwUA1xv96X_2_OlrobO5xax9WElI3oE2My6DtfzG57IAOZfenOB1lbCrzKimnDHmusISBdu-GArpt5CxukpK2Ml7zouhzueKtYe1lWPXliWER4ZHRM5dU2zyGbBnAdobGIDLmewg-vioktrvkQS-83CbHsyNc5Egn2hHEhJbDur12Wa5qZdTvW8CvNmvYr93VX9yzoUUsRe3w0jKZsVZ1sfHg1EyOoa2-bCTFnPyFjBXcG5GqTOnmP4pSAx0MQCX--Q")
                     )
-                ).requestAlbum("4aawyAB9vmqN3uQ7FjRGTy").toString()
+                ).requestAlbum("0sNOF9WDwhWunNAHPD3Baj").toString()
             )
         }
     }
