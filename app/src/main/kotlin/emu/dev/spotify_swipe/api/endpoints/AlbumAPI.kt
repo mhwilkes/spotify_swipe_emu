@@ -12,7 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 
-class AlbumRequest(val spotifyRequest: SpotifyRequest) {
+class AlbumAPI(val spotifyRequest: SpotifyRequest) {
 
     //TODO implement functionality and return types
 

@@ -1,5 +1,5 @@
 package emu.dev.spotify_swipe.api.endpoints
 
-class BrowseRequest {
+class PersonalizationAPI {
 
 }
