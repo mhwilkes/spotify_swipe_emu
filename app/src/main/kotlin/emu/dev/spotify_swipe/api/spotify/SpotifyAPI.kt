@@ -1,5 +1,7 @@
 package emu.dev.spotify_swipe.api.spotify
 
-sealed class SpotifyAPI() {
+import io.ktor.client.HttpClient
+
+class SpotifyAPI(val client: HttpClient) {
 
 }
