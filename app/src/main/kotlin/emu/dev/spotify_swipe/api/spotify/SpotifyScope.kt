@@ -182,11 +182,14 @@ enum class SpotifyScope(val uri: String) {
     USER_LIBRARY_MODIFY("user-library-modify"),
 
     /**
+     *  Read access to a user's "Your Music" library.
      *
+     * **Visible to Users** Access your saved tracks and albums
      *
-     * **Visible to Users**
-     *
-     * []()
+     * [Check User's Saved Albums](https://developer.spotify.com/documentation/web-api/reference/library/check-users-saved-albums/)
+     * [Check User's Saved Tracks](https://developer.spotify.com/documentation/web-api/reference/library/check-users-saved-tracks/)
+     * [Get Current User's Saved Albums](https://developer.spotify.com/documentation/web-api/reference/library/get-users-saved-albums/)
+     * [Get a User's Saved Tracks](https://developer.spotify.com/documentation/web-api/reference/library/get-users-saved-tracks/)
      */
     USER_LIBRARY_READ("user-library-read"),
 
@@ -195,20 +198,20 @@ enum class SpotifyScope(val uri: String) {
     */
 
     /**
+     * Read access to a user's top artists and tracks.
      *
+     * **Visible to Users** Read your top artists and tracks.
      *
-     * **Visible to Users**
-     *
-     * []()
+     * [Get a User's Top Artists and Tracks](https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/)
      */
     USER_TOP_READ("user-top-read"),
 
     /**
+     * Read access to a user’s recently played tracks.
      *
+     * **Visible to Users** Access your recently played items.
      *
-     * **Visible to Users**
-     *
-     * []()
+     * [Get Current User's Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/player/get-recently-played/)
      */
     USER_READ_RECENTLY_PLAYED("user-read-recently-played"),
 
@@ -217,20 +220,22 @@ enum class SpotifyScope(val uri: String) {
     */
 
     /**
+     * Read access to the list of artists and other users that the user follows.
      *
+     * **Visible to Users** Access your followers and who you are following.
      *
-     * **Visible to Users**
-     *
-     * []()
+     * [Check if Current User Follows Artists or Users](https://developer.spotify.com/documentation/web-api/reference/follow/check-current-user-follows/)
+     * [Get User's Followed Artists](https://developer.spotify.com/documentation/web-api/reference/follow/get-followed/)
      */
     USER_FOLLOW_READ("user-follow-read"),
 
     /**
+     * Write/delete access to the list of artists and other users that the user follows.
      *
+     * **Visible to Users** Manage who you are following.
      *
-     * **Visible to Users**
-     *
-     * []()
+     * [Follow Artists or Users](https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/)
+     * [Unfollow Artists or Users](https://developer.spotify.com/documentation/web-api/reference/follow/unfollow-artists-users/)
      */
     USER_FOLLOW_MODIFY("user-follow_modify")
 }
