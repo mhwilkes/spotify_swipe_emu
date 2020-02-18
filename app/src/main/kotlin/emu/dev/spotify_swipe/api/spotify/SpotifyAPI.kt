@@ -1,5 +1,5 @@
 package emu.dev.spotify_swipe.api.spotify
 
-class SpotifyAPI() {
+sealed class SpotifyAPI() {
 
 }
