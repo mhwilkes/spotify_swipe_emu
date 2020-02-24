@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import emu.dev.spotify_swipe.api.data.Album
 import emu.dev.spotify_swipe.api.data.AlbumSimple
 import emu.dev.spotify_swipe.api.data.TrackSimple
-import emu.dev.spotify_swipe.api.spotify.SpotifyAuthToken
+import emu.dev.spotify_swipe.api.spotify.Token
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
@@ -31,7 +31,7 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
 
     fun requestAlbumTracks(
         client: HttpClient,
-        tokenSpotify: SpotifyAuthToken,
+        tokenSpotify: Token,
         id: String,
         limit: Int = 20,
         offset: Int = 0,
@@ -42,7 +42,7 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
 
     fun requestAlbums(
         client: HttpClient,
-        tokenSpotify: SpotifyAuthToken,
+        tokenSpotify: Token,
         ids: Array<String>,
         market: String? = null
     ): Array<AlbumSimple>? {

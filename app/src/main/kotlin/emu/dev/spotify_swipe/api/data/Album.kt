@@ -16,7 +16,7 @@ data class AlbumSimple(
     val restrictions: Restriction,
     val type: String,
     val uri: String
-){
+) {
     override fun toString(): String {
         return "AlbumSimple(album_group=$album_group, album_type=$album_type, artists=${artists?.toString()}, available_markets=${available_markets?.toString()}, external_urls=${external_urls?.toString()}, href=$href, id=$id, images=${images?.toString()}, name=$name, release_date=$release_date, release_date_precision=$release_date_precision, restrictions=$restrictions, type=$type, uri=$uri)"
     }
