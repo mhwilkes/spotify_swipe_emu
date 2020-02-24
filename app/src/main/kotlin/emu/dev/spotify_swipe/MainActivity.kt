@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val client = HttpClient {
             install(JsonFeature) {
-                serializer = GsonSerializer{
+                serializer = GsonSerializer {
                     serializeNulls()
                     disableHtmlEscaping()
                     setPrettyPrinting()
@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         val API = SpotifyAPI(client)
 
         GlobalScope.launch {
+            API.authorizationCodeRequest(show_dialog=true)
+
             println(
                 AlbumAPI(
                     SpotifyRequest(

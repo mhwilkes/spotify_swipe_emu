@@ -16,36 +16,32 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
 
     //TODO implement functionality and return types
 
-
     suspend fun requestAlbum(
         id: String,
         market: String? = null
     ): Album? {
-        val response = spotifyRequest.client.get<String>("https://api.spotify.com/v1/albums/${id}") {
-            accept(ContentType.Application.Json)
-            header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
-        }
+        val response =
+            spotifyRequest.client.get<String>("https://api.spotify.com/v1/albums/${id}") {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
         println(response)
         return Gson().fromJson(response, Album::class.java)
     }
 
     fun requestAlbumTracks(
-        client: HttpClient,
-        tokenSpotify: Token,
         id: String,
         limit: Int = 20,
         offset: Int = 0,
         market: String? = null
-    ): Array<TrackSimple>? {
-        return emptyArray()
+    ): List<TrackSimple>? {
+        return listOf()
     }
 
     fun requestAlbums(
-        client: HttpClient,
-        tokenSpotify: Token,
         ids: Array<String>,
         market: String? = null
-    ): Array<AlbumSimple>? {
-        return emptyArray()
+    ): List<AlbumSimple>? {
+        return listOf()
     }
 }

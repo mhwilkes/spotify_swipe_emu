@@ -11,7 +11,12 @@ import io.ktor.http.*
 import emu.dev.spotify_swipe.api.spotify.SpotifyScope
 
 data class SpotifyRequest(val client: HttpClient, val token: Token)
-data class Token(val access_token: String, val token_type: String, val expires_in : Int, val scope : String)
+data class Token(
+    val access_token: String,
+    val token_type: String,
+    val expires_in: Int,
+    val scope: String
+)
 
 class SpotifyAPI(val client: HttpClient) {
     internal val AUTH_ENDPOINT: String = "https://accounts.spotify.com/authorize"
@@ -20,6 +25,28 @@ class SpotifyAPI(val client: HttpClient) {
     internal val CLIENT_SECRET: String = "9b7780574cb1414596bf3a241d15ace0"
     internal val REDIRECT_URI: String = "https://www.accounts.spotify.com/callback"
 
+    // TODO need login activity and callback system
+
+    // https://developer.spotify.com/documentation/android/guides/android-authentication/
+
+    fun buildAuthCodeURL(
+        client_id: String = CLIENT_ID,
+        response_type: String = "code",
+        redirect_uri: String = REDIRECT_URI,
+        state: String? = null,
+        vararg scopes: String?,
+        show_dialog: Boolean? = true
+    ): String {
+        return AUTH_ENDPOINT
+            .plus("?client_id=${client_id}")
+            .plus("&response_type=${response_type}")
+            .plus("&redirect_uri=${redirect_uri}")
+            .plus(if (state != null) "&state=${state}" else "")
+            .plus(if (scopes != null) "&scope=${scopes.joinToString("%20")}" else "")
+            .plus(if (show_dialog != null && show_dialog) "&show_dialog=${show_dialog}" else "")
+    }
+
+    // 500 error when running
     suspend fun authorizationCodeRequest(
         client_id: String = CLIENT_ID,
         response_type: String = "code",
@@ -35,7 +62,8 @@ class SpotifyAPI(val client: HttpClient) {
                 .plus("&redirect_uri=${redirect_uri}")
                 .plus(if (state != null) "&state=${state}" else "")
                 .plus(if (scopes != null) "&scope=${scopes.joinToString("%20")}" else "")
-                .plus(if (show_dialog != null && show_dialog) "&show_dialog=${show_dialog}{it.uri}" else "")
+                .plus(if (show_dialog != null && show_dialog) "&show_dialog=${show_dialog}" else "")
+                .plus("{it.uri}")
         ) {
             accept(ContentType.Application.Json)
         }
@@ -57,8 +85,9 @@ class SpotifyAPI(val client: HttpClient) {
         client_id: String = CLIENT_ID,
         client_secret: String = CLIENT_SECRET,
         grant_type: String = "client_credentials"
-    ) : Token {
-        val clientCredentials = java.util.Base64.getEncoder().encodeToString((client_id + ":" + client_secret).toByteArray())
+    ): Token {
+        val clientCredentials = java.util.Base64.getEncoder()
+            .encodeToString((client_id + ":" + client_secret).toByteArray())
         val request = client.post<String>(
             TOKEN_ENDPOINT
         ) {
