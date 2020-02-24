@@ -26,13 +26,19 @@ class MainActivity : AppCompatActivity() {
                     setPrettyPrinting()
                 }
             }
-
         }
 
         val API = SpotifyAPI(client)
 
         GlobalScope.launch {
-            println()
+            println(
+                AlbumAPI(
+                    SpotifyRequest(
+                        client,
+                        API.clientCredentialsRequest()
+                    )
+                ).requestAlbum("0sNOF9WDwhWunNAHPD3Baj").toString()
+            )
         }
     }
 }

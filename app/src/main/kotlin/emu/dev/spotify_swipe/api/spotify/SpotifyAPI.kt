@@ -10,7 +10,7 @@ import io.ktor.client.request.header
 import io.ktor.http.*
 import emu.dev.spotify_swipe.api.spotify.SpotifyScope
 
-data class SpotifyRequest(val client: HttpClient, val spotifyAuthToken: Token)
+data class SpotifyRequest(val client: HttpClient, val token: Token)
 data class Token(val access_token: String, val token_type: String, val expires_in : Int, val scope : String)
 
 class SpotifyAPI(val client: HttpClient) {
