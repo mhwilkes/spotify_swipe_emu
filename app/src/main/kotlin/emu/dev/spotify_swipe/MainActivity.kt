@@ -32,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         val API = SpotifyAPI(client)
 
         GlobalScope.launch {
-            API.clientCredentialsRequest()
-
+            println()
         }
     }
 }

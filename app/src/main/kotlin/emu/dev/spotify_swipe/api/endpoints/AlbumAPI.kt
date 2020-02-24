@@ -23,7 +23,7 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
     ): Album? {
         val response = spotifyRequest.client.get<String>("https://api.spotify.com/v1/albums/${id}") {
             accept(ContentType.Application.Json)
-            header("Authorization", "Bearer ${spotifyRequest.spotifyAuthToken.token}")
+            header("Authorization", "Bearer ${spotifyRequest.spotifyAuthToken.access_token}")
         }
         println(response)
         return Gson().fromJson(response, Album::class.java)

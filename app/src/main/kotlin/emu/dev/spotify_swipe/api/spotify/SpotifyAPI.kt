@@ -1,15 +1,17 @@
 package emu.dev.spotify_swipe.api.spotify
 
-import io.ktor.*
+import com.google.gson.Gson
+import io.ktor.http.content.TextContent
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.header
-import io.ktor.http.ContentType
+import io.ktor.http.*
+import emu.dev.spotify_swipe.api.spotify.SpotifyScope
 
 data class SpotifyRequest(val client: HttpClient, val spotifyAuthToken: Token)
-data class Token(val token: String)
+data class Token(val access_token: String, val token_type: String, val expires_in : Int, val scope : String)
 
 class SpotifyAPI(val client: HttpClient) {
     internal val AUTH_ENDPOINT: String = "https://accounts.spotify.com/authorize"
@@ -60,10 +62,11 @@ class SpotifyAPI(val client: HttpClient) {
         val request = client.post<String>(
             TOKEN_ENDPOINT
         ) {
-            body = TextContent("grant_type=client_credentials", contentType = ContentType.Application.FormURLEncoded)
+            header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             header("Authorization", "Basic ${clientCredentials}")
+            body = "grant_type=client_credentials"
         }
 
-        return Token(request)
+        return Gson().fromJson(request, Token::class.java)
     }
 }
