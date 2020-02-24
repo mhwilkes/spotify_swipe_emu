@@ -18,6 +18,11 @@ data class Token(
     val scope: String
 )
 
+enum class LOGIN_METHOD(val uri: String) {
+    LOGIN_ACTIVITY("login-activity"),
+    WEB_LOGIN("web-login"),
+}
+
 class SpotifyAPI(val client: HttpClient) {
     internal val AUTH_ENDPOINT: String = "https://accounts.spotify.com/authorize"
     internal val TOKEN_ENDPOINT: String = "https://accounts.spotify.com/api/token"
@@ -28,6 +33,7 @@ class SpotifyAPI(val client: HttpClient) {
     // TODO need login activity and callback system
 
     // https://developer.spotify.com/documentation/android/guides/android-authentication/
+    // https://developer.spotify.com/documentation/android/quick-start/#register-application-fingerprints
 
     fun buildAuthCodeURL(
         client_id: String = CLIENT_ID,
@@ -48,25 +54,10 @@ class SpotifyAPI(val client: HttpClient) {
 
     // 500 error when running
     suspend fun authorizationCodeRequest(
-        client_id: String = CLIENT_ID,
-        response_type: String = "code",
-        redirect_uri: String = REDIRECT_URI,
-        state: String? = null,
-        vararg scopes: String?,
-        show_dialog: Boolean? = true
+        request_url: String,
+        method: LOGIN_METHOD
     ) {
-        val response = client.get<String>(
-            AUTH_ENDPOINT
-                .plus("?client_id=${client_id}")
-                .plus("&response_type=${response_type}")
-                .plus("&redirect_uri=${redirect_uri}")
-                .plus(if (state != null) "&state=${state}" else "")
-                .plus(if (scopes != null) "&scope=${scopes.joinToString("%20")}" else "")
-                .plus(if (show_dialog != null && show_dialog) "&show_dialog=${show_dialog}" else "")
-                .plus("{it.uri}")
-        ) {
-            accept(ContentType.Application.Json)
-        }
+
     }
 
 
