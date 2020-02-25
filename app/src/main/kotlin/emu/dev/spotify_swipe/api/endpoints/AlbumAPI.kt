@@ -36,10 +36,6 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
         return Gson().fromJson(response, Album::class.java)
     }
 
-    inline fun <reified T> fromJson(json: String): T {
-        return Gson().fromJson(json, object : TypeToken<T>() {}.type)
-    }
-
     suspend fun requestAlbumTracks(
         id: String,
         limit: Int = 20,
@@ -65,15 +61,15 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
         vararg ids: String,
         market: String? = null
     ): List<AlbumSimple>? {
-        val typeToken = object : TypeToken<List<AlbumSimple>>(){}.type
+        val typeToken = object : TypeToken<List<AlbumSimple>>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 DEFAULT_ENDPOINT
                     .plus("?ids=")
-                    .plus(ids.joinToString(limit=20))
+                    .plus(ids.joinToString(limit = 20))
                     .plus(if (market != null) "&market=$market" else "&market=from_token")
             )
 
-            return Gson().fromJson(response, typeToken)
+        return Gson().fromJson(response, typeToken)
     }
 }
