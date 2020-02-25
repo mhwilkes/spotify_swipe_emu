@@ -31,15 +31,13 @@ class MainActivity : AppCompatActivity() {
         val API = SpotifyAPI(client)
 
         GlobalScope.launch {
-            API.authorizationCodeRequest(show_dialog=true)
-
             println(
                 AlbumAPI(
                     SpotifyRequest(
                         client,
                         API.clientCredentialsRequest()
                     )
-                ).requestAlbum("0sNOF9WDwhWunNAHPD3Baj").toString()
+                ).requestAlbums("6akEvsycLGftJxYudPjmqK", "6akEvsycLGftJxYudPjmqK", "6akEvsycLGftJxYudPjmqK").toString()
             )
         }
     }
