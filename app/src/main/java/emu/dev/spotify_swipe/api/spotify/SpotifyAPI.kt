@@ -9,7 +9,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 
 data class SpotifyRequest(val client: HttpClient, val token: Token) {
-    val DEFAULT_ENDPOINT : String = "https://www.spotify.com/v1/"
+    val DEFAULT_ENDPOINT : String = "https://www.spotify.com/v1"
 }
 data class Token(
     val access_token: String,
