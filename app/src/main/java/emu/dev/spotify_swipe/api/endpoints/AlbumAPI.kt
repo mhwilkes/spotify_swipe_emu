@@ -12,11 +12,11 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 
-class AlbumAPI(val spotifyRequest: SpotifyRequest) {
+class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
 
-    private val ALBUM_ENDPOINT = "https://api.spotify.com/v1/albums/"
-
-    //TODO implement functionality and return types
+    private val ALBUM_ENDPOINT =
+        spotifyRequest.DEFAULT_ENDPOINT
+            .plus("/albums/")
 
     suspend fun requestAlbum(
         id: String,
@@ -62,7 +62,7 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
     // Scuffed way of taking albums return array into object then returning inner list
 
     suspend fun requestAlbums(
-        vararg ids: String,
+        vararg ids: String?,
         market: String? = null
     ): List<Album>? {
         val typeToken = object : TypeToken<List<Album>>() {}.type

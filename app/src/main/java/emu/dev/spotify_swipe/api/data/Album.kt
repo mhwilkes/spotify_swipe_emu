@@ -3,9 +3,16 @@ package emu.dev.spotify_swipe.api.data
 data class Albums(
     val albums: List<Album>
 ) {
-    fun asList(): List<Album> {
+    internal fun asList(): List<Album> {
         return albums
     }
+}
+
+enum class IncludeGroups(val uri: String){
+    ALBUM("album"),
+    SINGLE("single"),
+    APPEARS_ON("appears_on"),
+    COMPILATION("compilation")
 }
 
 data class AlbumSimple(

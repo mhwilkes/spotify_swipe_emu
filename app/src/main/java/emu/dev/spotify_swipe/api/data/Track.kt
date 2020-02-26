@@ -1,5 +1,11 @@
 package emu.dev.spotify_swipe.api.data
 
+data class Tracks(val tracks: List<Track>) {
+    internal fun asList(): List<Track> {
+        return tracks
+    }
+}
+
 data class TrackSimple(
     val artists: List<ArtistSimple>?,
     val available_markets: List<String>?,
@@ -20,7 +26,7 @@ data class TrackSimple(
     val is_local: Boolean?
 )
 
-data class Track (
+data class Track(
     val album: AlbumSimple?,
     val artists: List<ArtistSimple>?,
     val available_markets: List<String>?,

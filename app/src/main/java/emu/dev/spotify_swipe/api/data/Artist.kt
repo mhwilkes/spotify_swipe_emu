@@ -1,5 +1,13 @@
 package emu.dev.spotify_swipe.api.data
 
+data class Artists(
+    val artists: List<Artist>
+) {
+    internal fun asList(): List<Artist> {
+        return artists
+    }
+}
+
 data class ArtistSimple(
     val external_urls: Map<String, String> = mapOf(),
     val href: String?,
