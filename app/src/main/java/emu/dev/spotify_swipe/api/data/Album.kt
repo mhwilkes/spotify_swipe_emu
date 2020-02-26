@@ -1,5 +1,13 @@
 package emu.dev.spotify_swipe.api.data
 
+data class Albums(
+    val albums: List<Album>
+) {
+    fun asList(): List<Album> {
+        return albums
+    }
+}
+
 data class AlbumSimple(
     @Transient
     val album_group: String?,
@@ -16,11 +24,7 @@ data class AlbumSimple(
     val restrictions: Restriction,
     val type: String,
     val uri: String
-) {
-    override fun toString(): String {
-        return "AlbumSimple(album_group=$album_group, album_type=$album_type, artists=${artists?.toString()}, available_markets=${available_markets?.toString()}, external_urls=${external_urls?.toString()}, href=$href, id=$id, images=${images?.toString()}, name=$name, release_date=$release_date, release_date_precision=$release_date_precision, restrictions=$restrictions, type=$type, uri=$uri)"
-    }
-}
+)
 
 data class Album(
     val album_type: String,
@@ -38,11 +42,7 @@ data class Album(
     val popularity: Int,
     val release_date: String,
     val release_date_precision: String,
-    val tracks: Page<Track>,
+    val tracks: Page<TrackSimple>,
     val type: String,
     val uri: String
-) {
-    override fun toString(): String {
-        return "Album(album_type=$album_type, artists=${artists.toString()}, available_markets=${available_markets.toString()}, copyrights=${copyrights.toString()}, external_ids=${external_ids.toString()}, external_urls=${external_urls.toString()}, genres=${genres.toString()}, href=$href, id=$id, images=${images.toString()}, label=$label, name=$name, popularity=$popularity, release_date=$release_date, release_date_precision=$release_date_precision, tracks=${tracks.toString()}, type=$type, uri=$uri)"
-    }
-}
+)

@@ -1,14 +1,15 @@
 package emu.dev.spotify_swipe.api.endpoints
 
 import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
-import emu.dev.spotify_swipe.api.data.Track
 import emu.dev.spotify_swipe.api.data.Album
-import emu.dev.spotify_swipe.api.data.AlbumSimple
-import emu.dev.spotify_swipe.api.data.TrackSimple
+import emu.dev.spotify_swipe.api.data.Albums
 import emu.dev.spotify_swipe.api.data.Page
+import emu.dev.spotify_swipe.api.data.TrackSimple
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
-import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -16,7 +17,7 @@ import io.ktor.http.ContentType
 
 class AlbumAPI(val spotifyRequest: SpotifyRequest) {
 
-    internal val DEFAULT_ENDPOINT = "https://api.spotify.com/v1/albums/"
+    private val ALBUM_ENDPOINT = "https://api.spotify.com/v1/albums/"
 
     //TODO implement functionality and return types
 
@@ -26,13 +27,14 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
     ): Album? {
         val response =
             spotifyRequest.client.get<String>(
-                DEFAULT_ENDPOINT
+                ALBUM_ENDPOINT
                     .plus(id)
-                    .plus(if (market != null) "&market=$market" else "&market=from_token")
+                    .plus(if (market != null) "&market=$market" else "")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
+
         return Gson().fromJson(response, Album::class.java)
     }
 
@@ -45,31 +47,37 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
         val typeToken = object : TypeToken<Page<TrackSimple>>() {}.type
         val response =
             spotifyRequest.client.get<String>(
-                DEFAULT_ENDPOINT
+                ALBUM_ENDPOINT
                     .plus(id)
                     .plus("/tracks")
+                    .plus()
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
+
         return Gson().fromJson(response, typeToken)
     }
 
-    // TODO Issue currently 401
+    // TODO fix this
+    // Scuffed way of taking albums return array into object then returning inner list
 
     suspend fun requestAlbums(
         vararg ids: String,
         market: String? = null
-    ): List<AlbumSimple>? {
-        val typeToken = object : TypeToken<List<AlbumSimple>>() {}.type
+    ): List<Album>? {
+        val typeToken = object : TypeToken<List<Album>>() {}.type
         val response =
             spotifyRequest.client.get<String>(
-                DEFAULT_ENDPOINT
+                ALBUM_ENDPOINT
                     .plus("?ids=")
-                    .plus(ids.joinToString(limit = 20))
-                    .plus(if (market != null) "&market=$market" else "&market=from_token")
-            )
+                    .plus(ids.joinToString(limit = 20, separator = "%2C"))
+                    .plus(if (market != null) "&market=$market" else "")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
 
-        return Gson().fromJson(response, typeToken)
+        return Gson().fromJson(response, Albums::class.java).asList()
     }
 }
