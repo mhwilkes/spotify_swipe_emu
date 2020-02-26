@@ -1,9 +1,6 @@
 package emu.dev.spotify_swipe.api.endpoints
 
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import emu.dev.spotify_swipe.api.data.Album
 import emu.dev.spotify_swipe.api.data.Albums
@@ -50,7 +47,9 @@ class AlbumAPI(val spotifyRequest: SpotifyRequest) {
                 ALBUM_ENDPOINT
                     .plus(id)
                     .plus("/tracks")
-                    .plus()
+                    .plus("?limit=$limit")
+                    .plus("?offset=$offset")
+                    .plus(if (market != null) "&market=$market" else "")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
