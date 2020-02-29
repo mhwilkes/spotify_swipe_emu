@@ -1,5 +1,13 @@
 package emu.dev.spotify_swipe.api.data
 
+data class AudioFeatures(
+    val features: List<AudioFeature>
+) {
+    internal fun asList(): List<AudioFeature> {
+        return features
+    }
+}
+
 data class AudioFeature(
     val acousticness: Float?,
     val analysis_url: String?,

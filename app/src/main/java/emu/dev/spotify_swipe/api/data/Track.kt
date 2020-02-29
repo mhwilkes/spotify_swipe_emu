@@ -1,6 +1,8 @@
 package emu.dev.spotify_swipe.api.data
 
-data class Tracks(val tracks: List<Track>) {
+data class Tracks(
+    val tracks: List<Track>
+) {
     internal fun asList(): List<Track> {
         return tracks
     }
