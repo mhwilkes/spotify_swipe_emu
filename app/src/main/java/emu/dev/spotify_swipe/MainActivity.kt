@@ -3,6 +3,7 @@ package emu.dev.spotify_swipe
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import emu.dev.spotify_swipe.api.endpoints.AlbumAPI
+import emu.dev.spotify_swipe.api.spotify.LoginMethod
 import emu.dev.spotify_swipe.api.spotify.SpotifyAPI
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 import io.ktor.client.HttpClient
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val API = SpotifyAPI(client)
+
+
 
         GlobalScope.launch {
             println(

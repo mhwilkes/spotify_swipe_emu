@@ -1,5 +1,7 @@
 package emu.dev.spotify_swipe.api.spotify
 
+import android.content.Context
+import android.content.Intent
 import com.google.gson.Gson
 import emu.dev.spotify_swipe.utils.base64encoded
 import io.ktor.client.HttpClient
@@ -9,8 +11,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 
 data class SpotifyRequest(val client: HttpClient, val token: Token) {
-    val DEFAULT_ENDPOINT : String = "https://www.spotify.com/v1"
+    val DEFAULT_ENDPOINT: String = "https://www.spotify.com/v1"
 }
+
 data class Token(
     val access_token: String,
     val token_type: String,
@@ -53,13 +56,14 @@ class SpotifyAPI(val client: HttpClient) {
     }
 
     // 500 error when running
-    suspend fun authorizationCodeRequest(
+    fun authorizationCodeRequest(
+        context: Context,
         request_url: String,
         method: LoginMethod
     ) {
 
     }
-    
+
     suspend fun implicitGrantRequest(
         client_id: String = CLIENT_ID,
         response_type: String = "token",
