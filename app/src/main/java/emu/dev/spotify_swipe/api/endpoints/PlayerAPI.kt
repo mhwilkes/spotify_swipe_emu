@@ -1,3 +1,5 @@
 package emu.dev.spotify_swipe.api.endpoints
 
-class PlayerAPI
+import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+
+class PlayerAPI(private val spotifyRequest: SpotifyRequest)

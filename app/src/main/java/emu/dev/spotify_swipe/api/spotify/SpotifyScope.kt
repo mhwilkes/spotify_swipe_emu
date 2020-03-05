@@ -237,8 +237,7 @@ enum class SpotifyScope(val uri: String) {
      * [Follow Artists or Users](https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/)
      * [Unfollow Artists or Users](https://developer.spotify.com/documentation/web-api/reference/follow/unfollow-artists-users/)
      */
-    USER_FOLLOW_MODIFY("user-follow_modify")
-
+    USER_FOLLOW_MODIFY("user-follow_modify");
 
 }
 
