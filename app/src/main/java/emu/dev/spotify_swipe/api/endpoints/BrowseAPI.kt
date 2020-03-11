@@ -155,8 +155,8 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 spotifyRequest.DEFAULT_ENDPOINT
                     .plus("recommendations")
-                    .plus()
-
+                    .plus("&limit=$limit")
+                    .plus(if (market != null) "&market=$market" else "")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")

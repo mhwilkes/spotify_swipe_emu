@@ -2,4 +2,15 @@ package emu.dev.spotify_swipe.api.endpoints
 
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 
-class UserAPI(private val spotifyRequest: SpotifyRequest)
+class UserAPI(private val spotifyRequest: SpotifyRequest) {
+    suspend fun getCurrentProfile(
+    ) {
+
+    }
+
+    suspend fun getProfile(
+
+    ) {
+
+    }
+}
