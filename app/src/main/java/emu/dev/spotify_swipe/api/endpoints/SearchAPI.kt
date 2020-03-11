@@ -4,6 +4,7 @@ import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 
 class SearchAPI(private val spotifyRequest: SpotifyRequest){
 
+    // @GET
     // Scope required: USER_READ_PRIVATE("user-read-private")
     suspend fun search(
         vararg q: String,

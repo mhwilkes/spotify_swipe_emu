@@ -10,6 +10,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     // TODO might need streaming scope for playback. Spotify says its only for web playback sdk though
 
+    // @POST
     suspend fun addToPlaybackQueue(
         uri: String,
         device_id: String? = null
@@ -17,11 +18,13 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     // Requires scope: USER_READ_PLAYBACK_STATE("user-read-playback-state")
     suspend fun getAvailableDevices(): Device {
 
     }
 
+    // @GET
     // Requires scope: USER_READ_PLAYBACK_STATE("user-read-playback-state")
     suspend fun getInformationOnPlayback(
         market: String? = null
@@ -29,6 +32,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     // Requires scope: USER_READ_CURRENTLY_PLAYING("user-read-currently-playing")
     // Requires scope: USER_READ_RECENTLY_PLAYED("user-read-recently-played")
     suspend fun getCurrentUserRecentlyPlayed(
@@ -39,6 +43,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     // Requires scope: USER_READ_PLAYBACK_STATE("user-read-playback-state")
     suspend fun getCurrentUserCurrentPlaying(
         market: String? = null
@@ -46,7 +51,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
-
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun pausePlayback(
         device_id: String? = null
@@ -54,6 +59,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun seekPosition(
         position_ms: Int,
@@ -62,6 +68,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun setRepeat(
         state: String,
@@ -70,6 +77,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun setVolume(
         volume_percent: Int,
@@ -78,6 +86,8 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+
+    // @POST
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun skipToNext(
         device_id: String? = null
@@ -85,6 +95,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @POST
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun skipToPrevious(
         device_id: String? = null
@@ -92,6 +103,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun startResumePlayback(
         device_id: String? = null,
@@ -103,6 +115,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun toggleShuffle(
         state: Boolean,
@@ -111,6 +124,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Requires scope: USER_MODIFY_PLAYBACK_STATE("user-modify-playback-state")
     suspend fun transferPlayback(
         vararg device_ids: String,

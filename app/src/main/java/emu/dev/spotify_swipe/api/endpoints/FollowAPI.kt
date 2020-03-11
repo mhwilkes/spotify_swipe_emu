@@ -5,6 +5,7 @@ import emu.dev.spotify_swipe.api.data.CursorPage
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 
 class FollowAPI(private val spotifyRequest: SpotifyRequest) {
+
     // @GET
     // Requires scope: USER_FOLLOW_READ("user-follow-read")
     suspend fun checkFollowUserArtist(

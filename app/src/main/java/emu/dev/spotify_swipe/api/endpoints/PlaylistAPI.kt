@@ -10,6 +10,7 @@ import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 
 class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
+    // @POST
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun addTrackToPlaylist(
@@ -20,6 +21,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun changePlaylistDetails(
@@ -32,6 +34,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @POST
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun createPlaylist(
@@ -44,6 +47,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     // Scope required: PLAYLIST_READ_COLLABORATIVE("playlist-read-collaborative")
     // Requires scope: PLAYLIST_READ_PRIVATE("playlist-read-private")
     suspend fun getCurrentUserPlaylists(
@@ -53,6 +57,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     // Scope required: PLAYLIST_READ_COLLABORATIVE("playlist-read-collaborative")
     // Requires scope: PLAYLIST_READ_PRIVATE("playlist-read-private")
     suspend fun getUserPlaylists(
@@ -63,12 +68,14 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     suspend fun getPlaylistCoverImage(
         playlist_id: String
     ): Array<Image> {
 
     }
 
+    // @GET
     suspend fun getPlaylist(
         playlist_id: String,
         vararg fields: String? = arrayOf(),
@@ -77,6 +84,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @GET
     suspend fun getPlaylistTracks(
         playlist_id: String,
         vararg fields: String? = arrayOf(),
@@ -87,6 +95,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @DELETE
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun removePlaylistTracks(
@@ -96,6 +105,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun reorderPlaylistTracks(
@@ -108,6 +118,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
+    // @PUT
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun replacePlaylistTracks(
@@ -117,7 +128,7 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     }
 
-
+    // @PUT
     // Requires scope: UGC_IMAGE_UPLOAD("ugc-image-upload")
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")

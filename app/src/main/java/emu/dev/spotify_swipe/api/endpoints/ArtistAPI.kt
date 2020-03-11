@@ -10,6 +10,7 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 
 class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
+
     private val ARTIST_ENDPOINT: String =
         spotifyRequest.DEFAULT_ENDPOINT
             .plus("/artists/")
