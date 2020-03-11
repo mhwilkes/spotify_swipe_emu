@@ -1,15 +1,14 @@
 package emu.dev.spotify_swipe.api.endpoints
 
 import com.google.gson.Gson
-import com.google.gson.internal.bind.util.ISO8601Utils
 import com.google.gson.reflect.TypeToken
 import emu.dev.spotify_swipe.api.data.*
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+import emu.dev.spotify_swipe.utils.Timestamp
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
-import java.sql.Timestamp
 
 data class FeaturePlaylist(private val message: String, private val playlists: Page<Playlist>)
 
@@ -102,7 +101,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                     .plus("/featured-playlists")
                     .plus(if (locale != null) "&locale=$locale" else "")
                     .plus(if (country != null) "&country=$country" else "")
-                    .plus(if (timestamp != null) "&timestamp=${ISO8601Utils.format(timestamp)}" else "")
+                    .plus(if (timestamp != null) "&timestamp=${timestamp.encode8601}" else "")
                     .plus("&limit=$limit")
                     .plus("&offset=$offset")
 

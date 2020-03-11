@@ -1,6 +1,6 @@
 package emu.dev.spotify_swipe.api.data
 
-import java.sql.Timestamp
+import emu.dev.spotify_swipe.utils.Timestamp
 
 data class SavedAlbum(
     val added_at: Timestamp?,
