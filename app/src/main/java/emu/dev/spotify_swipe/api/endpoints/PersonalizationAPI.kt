@@ -6,7 +6,9 @@ class PersonalizationAPI(private val spotifyRequest: SpotifyRequest) {
 
     // Requires scope: USER_TOP_READ("user-top-read")
     suspend fun getTopArtistTrack(
-
+        limit: Int = 20,
+        offset: Int = 0,
+        time_range: String? = null
     ) {
 
     }
