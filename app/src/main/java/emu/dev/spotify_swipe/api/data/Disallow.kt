@@ -1,5 +1,7 @@
 package emu.dev.spotify_swipe.api.data
 
+data class Actions(private val disallow: Map<Disallow, Boolean> )
+
 enum class Disallow(val uri: String) {
     INTERRUPTING_PLAYBACK("interrupting-playback"),
     PAUSING("pausing"),
