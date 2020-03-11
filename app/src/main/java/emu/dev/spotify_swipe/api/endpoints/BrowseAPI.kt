@@ -11,8 +11,6 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import java.sql.Timestamp
 
-data class Message(private val message: String)
-
 data class FeaturePlaylist(private val message: String, private val playlists: Page<Playlist>)
 
 class BrowseAPI(private val spotifyRequest: SpotifyRequest) {

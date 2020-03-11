@@ -4,6 +4,7 @@ import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 
 class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     // @GET
+    // Requires scope: USER_FOLLOW_READ("user-follow-read")
     suspend fun checkFollowUserArtist(
 
     ): Boolean {
@@ -11,6 +12,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @GET
+    // Requires scope: PLAYLIST_READ_PRIVATE("playlist-read-private")
     suspend fun checkFollowPlaylist(
 
     ): Boolean {
@@ -18,6 +20,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @PUT
+    // Requires scope: USER_FOLLOW_MODIFY("user-follow_modify")
     suspend fun followArtistUser(
 
     ) {
@@ -25,6 +28,8 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @PUT
+    // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
+    // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun followPlaylist(
 
     ) {
@@ -32,6 +37,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @GET
+    // Requires scope: USER_FOLLOW_READ("user-follow-read")
     suspend fun getFollowedArtists(
 
     ) {
@@ -39,6 +45,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @DELETE
+    // Requires scope: USER_FOLLOW_MODIFY("user-follow_modify")
     suspend fun unfollowArtistUser(
 
     ) {
@@ -46,6 +53,8 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
     }
 
     // @DELETE
+    // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
+    // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
     suspend fun unfollowPlaylist(
 
     ) {
