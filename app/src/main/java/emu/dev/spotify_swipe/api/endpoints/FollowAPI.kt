@@ -1,10 +1,22 @@
 package emu.dev.spotify_swipe.api.endpoints
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import emu.dev.spotify_swipe.api.data.Artist
 import emu.dev.spotify_swipe.api.data.CursorPage
+import emu.dev.spotify_swipe.api.data.Recommendation
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+import io.ktor.client.request.accept
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
 
 class FollowAPI(private val spotifyRequest: SpotifyRequest) {
+
+    val FOLLOW_ENDPOINT =
+    spotifyRequest.DEFAULT_ENDPOINT
+        .plus("/me/following/")
+
 
     // @GET
     // Requires scope: USER_FOLLOW_READ("user-follow-read")
@@ -12,7 +24,19 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
         type: String,
         vararg ids: String
     ): Boolean {
+        val typeToken = object : TypeToken<Boolean>() {}.type
+        val response =
+            spotifyRequest.client.get<String>(
+                FOLLOW_ENDPOINT
+                    .plus("contains")
+                    .plus("?type=$type")
+                    .plus("&ids=${ids.joinToString(separator = "%2C")}")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
 
+        return Gson().fromJson(response, typeToken)
     }
 
     // @GET
@@ -22,6 +46,19 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
         vararg ids: String
     ): Boolean {
 
+        val typeToken = object : TypeToken<Boolean>() {}.type
+        val response =
+            spotifyRequest.client.get<String>(
+                spotifyRequest.DEFAULT_ENDPOINT
+                    .plus("/playlists/$playlist_id/followers/contains")
+                    .plus("?type=$type")
+                    .plus("&ids=${ids.joinToString(separator = "%2C")}")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
+
+        return Gson().fromJson(response, typeToken)
     }
 
     // @PUT

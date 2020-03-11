@@ -22,6 +22,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
         id: String,
         market: String? = null
     ): Album? {
+        val typeToken = object : TypeToken<Album>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 ALBUM_ENDPOINT
@@ -32,7 +33,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
 
-        return Gson().fromJson(response, Album::class.java)
+        return Gson().fromJson(response, typeToken)
     }
 
     suspend fun requestAlbumTracks(
