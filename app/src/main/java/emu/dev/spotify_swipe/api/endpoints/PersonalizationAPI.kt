@@ -1,6 +1,11 @@
 package emu.dev.spotify_swipe.api.endpoints
 
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+import io.ktor.client.request.accept
+import io.ktor.client.request.delete
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
 
 class PersonalizationAPI(private val spotifyRequest: SpotifyRequest) {
 
@@ -11,7 +16,15 @@ class PersonalizationAPI(private val spotifyRequest: SpotifyRequest) {
         offset: Int = 0,
         time_range: String? = null
     ) {
-
+        spotifyRequest.client.get<String>(
+            spotifyRequest.DEFAULT_ENDPOINT
+                .plus("limit=$limit")
+                .plus("&offset=$offset")
+                .plus(if (!time_range.isNullOrBlank()) "&time_range=$time_range" else "")
+        ) {
+            accept(ContentType.Application.Json)
+            header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+        }
     }
 
 }
