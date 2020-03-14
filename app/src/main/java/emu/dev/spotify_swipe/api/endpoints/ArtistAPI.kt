@@ -18,6 +18,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
     suspend fun requestArtist(
         id: String
     ): Artist {
+        val typeToken = object : TypeToken<Artist>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT
@@ -27,7 +28,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
 
-        return Gson().fromJson(response, Artist::class.java)
+        return Gson().fromJson(response, typeToken)
     }
 
     suspend fun requestArtistAlbums(
@@ -60,6 +61,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
         id: String,
         country: String? = null
     ): List<Track> {
+        val typeToken = object : TypeToken<Tracks>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT

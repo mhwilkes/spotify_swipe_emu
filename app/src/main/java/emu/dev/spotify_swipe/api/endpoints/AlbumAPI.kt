@@ -21,7 +21,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
     suspend fun requestAlbum(
         id: String,
         market: String? = null
-    ): Album? {
+    ): Album {
         val typeToken = object : TypeToken<Album>() {}.type
         val response =
             spotifyRequest.client.get<String>(
@@ -41,7 +41,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
         limit: Int = 20,
         offset: Int = 0,
         market: String? = null
-    ): Page<TrackSimple>? {
+    ): Page<TrackSimple> {
         val typeToken = object : TypeToken<Page<TrackSimple>>() {}.type
         val response =
             spotifyRequest.client.get<String>(
@@ -65,8 +65,8 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
     suspend fun requestAlbums(
         vararg ids: String?,
         market: String? = null
-    ): List<Album>? {
-        val typeToken = object : TypeToken<List<Album>>() {}.type
+    ): List<Album> {
+        val typeToken = object : TypeToken<Albums>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 ALBUM_ENDPOINT

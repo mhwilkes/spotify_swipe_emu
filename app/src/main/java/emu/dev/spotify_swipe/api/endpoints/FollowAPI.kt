@@ -51,8 +51,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 spotifyRequest.DEFAULT_ENDPOINT
                     .plus("/playlists/$playlist_id/followers/contains")
-                    .plus("?type=$type")
-                    .plus("&ids=${ids.joinToString(separator = "%2C")}")
+                    .plus("?ids=${ids.joinToString(separator = "%2C")}")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
@@ -67,7 +66,18 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
         type: String,
         vararg ids: String
     ) {
+        val typeToken = object : TypeToken<Boolean>() {}.type
+        val response =
+            spotifyRequest.client.get<String>(
+                FOLLOW_ENDPOINT
+                    .plus("?type=$type")
+                    .plus("&ids=${ids.joinToString(separator = "%2C")}")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
 
+        return Gson().fromJson(response, typeToken)
     }
 
     // @PUT

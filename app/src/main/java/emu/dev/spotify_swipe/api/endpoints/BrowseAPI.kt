@@ -135,7 +135,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
         return Gson().fromJson(response, typeToken)
     }
 
-    // TODO implement recommendation url query
+    // TODO Test this
     suspend fun requestRecommendationFromSeed(
         limit: Int = 20,
         market: String? = null,
@@ -154,7 +154,26 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                     .plus("recommendations")
                     .plus("&limit=$limit")
                     .plus(if (market != null) "&market=$market" else "")
-            ) {
+                    .plus(max_?.joinToString(separator = "&") ?: "")
+                    .plus(min_?.joinToString(separator = "&") ?: "")
+                    .plus(target_?.joinToString(separator = "&") ?: "")
+                    .plus(
+                        if (seed_artists != null) "&seed_artists=${seed_artists.joinToString(
+                            separator = "%2C"
+                        )}" else ""
+                    )
+                    .plus(
+                        if (seed_genres != null) "&seed_genres=${seed_genres.joinToString(
+                            separator = "%2C"
+                        )}" else ""
+                    )
+                    .plus(
+                        if (seed_tracks != null) "&seed_tracks=${seed_tracks.joinToString(
+                            separator = "%2C"
+                        )}" else ""
+                    )
+            )
+            {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
