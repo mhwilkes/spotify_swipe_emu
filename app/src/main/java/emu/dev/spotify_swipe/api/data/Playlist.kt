@@ -1,5 +1,7 @@
 package emu.dev.spotify_swipe.api.data
 
+data class FeaturePlaylist(private val message: String, private val playlists: Page<Playlist>)
+
 data class PlaylistSimple(
     val collaborative: Boolean?,
     val description: String?,

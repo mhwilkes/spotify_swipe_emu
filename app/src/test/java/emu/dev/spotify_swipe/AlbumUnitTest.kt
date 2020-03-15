@@ -29,14 +29,7 @@ class AlbumUnitTest {
 
     @Test
     suspend fun requestAlbum_Functional() {
-        assertEquals(
-            (),
-            AlbumAPI(
-            SpotifyRequest(
-                client,
-                API.clientCredentialsRequest()
-            )
-        ).requestAlbum("6JWc4iAiJ9FjyK0B59ABb4"))
+
     }
 
 }

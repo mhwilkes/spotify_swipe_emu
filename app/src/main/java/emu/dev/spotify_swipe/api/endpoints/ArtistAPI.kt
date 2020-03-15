@@ -31,6 +31,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
         return Gson().fromJson(response, typeToken)
     }
 
+    // TODO Check
     suspend fun requestArtistAlbums(
         id: String,
         vararg include_groups: IncludeGroups? = arrayOf(),

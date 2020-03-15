@@ -10,7 +10,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 
-data class FeaturePlaylist(private val message: String, private val playlists: Page<Playlist>)
+
 
 class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
 
