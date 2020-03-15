@@ -15,7 +15,7 @@ import org.junit.Assert.*
 
 class AlbumUnitTest {
 
-    val client = HttpClient {
+    private val client = HttpClient {
         install(JsonFeature) {
             serializer = GsonSerializer {
                 serializeNulls()
@@ -25,7 +25,7 @@ class AlbumUnitTest {
         }
     }
 
-    val API = SpotifyAPI(client)
+    private val API = SpotifyAPI(client)
 
     @Test
     suspend fun requestAlbum_Functional() {
