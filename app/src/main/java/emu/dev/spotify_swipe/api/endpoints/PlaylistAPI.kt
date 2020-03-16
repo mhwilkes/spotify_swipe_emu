@@ -1,14 +1,18 @@
 package emu.dev.spotify_swipe.api.endpoints
 
-import emu.dev.spotify_swipe.api.data.Image
-import emu.dev.spotify_swipe.api.data.Page
-import emu.dev.spotify_swipe.api.data.Playlist
-import emu.dev.spotify_swipe.api.data.PlaylistSimple
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import emu.dev.spotify_swipe.api.data.*
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+import io.ktor.client.request.*
+import io.ktor.http.ContentType
 
 // https://developer.spotify.com/documentation/general/guides/working-with-playlists/
 
 class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
+
+    val PLAYLIST_ENDPOINT = spotifyRequest.DEFAULT_ENDPOINT
+        .plus("/playlists")
 
     // @POST
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
@@ -18,9 +22,20 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         vararg uris: String? = arrayOf(),
         position: Int? = null
     ) {
-
+        val response =
+            spotifyRequest.client.post<String>(
+                PLAYLIST_ENDPOINT
+                    .plus("/$playlist_id/tracks")
+                    .plus("?uris=${uris.joinToString("%2C")}")
+                    .plus(if (position != null) "&position=$position" else "")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
     }
 
+
+    // TODO Add params to body
     // @PUT
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
     // Scope required: PLAYLIST_MODIFY_PRIVATE("playlist-modify-private")
@@ -31,8 +46,17 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         collaborative: Boolean = false,
         description: String? = null
     ) {
-
+        val response =
+            spotifyRequest.client.put<String>(
+                PLAYLIST_ENDPOINT
+                    .plus("/$playlist_id/")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
     }
+
+    // TODO Add params to body
 
     // @POST
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")
@@ -44,7 +68,17 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         collaborative: Boolean = false,
         description: String? = null
     ): Playlist {
+        val typeToken = object : TypeToken<Playlist>() {}.type
+        val response =
+            spotifyRequest.client.put<String>(
+                spotifyRequest.DEFAULT_ENDPOINT
+                    .plus("/users/$user_id/playlists")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
 
+        return Gson().fromJson(response, typeToken)
     }
 
     // @GET
@@ -54,7 +88,18 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         limit: Int = 20,
         offset: Int = 0
     ): Page<PlaylistSimple> {
-
+        val typeToken = object : TypeToken<Page<PlaylistSimple>>() {}.type
+        val response =
+            spotifyRequest.client.put<String>(
+                spotifyRequest.DEFAULT_ENDPOINT
+                    .plus("/me/playlists")
+                    .plus("?limit=$limit")
+                    .plus("&offset=$offset")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
+        return Gson().fromJson(response, typeToken)
     }
 
     // @GET
