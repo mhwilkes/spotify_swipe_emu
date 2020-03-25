@@ -49,7 +49,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                     .plus(id)
                     .plus("/tracks")
                     .plus("?limit=$limit")
-                    .plus("?offset=$offset")
+                    .plus("&offset=$offset")
                     .plus(if (market != null) "&market=$market" else "")
             ) {
                 accept(ContentType.Application.Json)
@@ -66,7 +66,6 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
         vararg ids: String?,
         market: String? = null
     ): List<Album> {
-        val typeToken = object : TypeToken<Albums>() {}.type
         val response =
             spotifyRequest.client.get<String>(
                 ALBUM_ENDPOINT
