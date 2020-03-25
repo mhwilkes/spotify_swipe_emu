@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                         client,
                         API.clientCredentialsRequest()
                     )
-                ).requestAlbum("6JWc4iAiJ9FjyK0B59ABb4")
+                ).requestAlbum("4aawyAB9vmqN3uQ7FjRGTy")
             )
         }
         println(intent.getStringExtra("response"))

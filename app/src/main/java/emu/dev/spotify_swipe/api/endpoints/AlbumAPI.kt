@@ -16,7 +16,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val ALBUM_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/albums/")
+            .plus("albums/")
 
     suspend fun requestAlbum(
         id: String,
@@ -32,7 +32,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-        println("Album Response: $response")
+
         return Gson().fromJson(response, typeToken)
     }
 

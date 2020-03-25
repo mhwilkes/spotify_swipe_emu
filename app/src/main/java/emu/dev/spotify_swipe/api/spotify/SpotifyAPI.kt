@@ -9,7 +9,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 
 data class SpotifyRequest(val client: HttpClient, val token: Token) {
-    val DEFAULT_ENDPOINT: String = "https://www.spotify.com/v1/"
+    val DEFAULT_ENDPOINT: String = "https://api.spotify.com/v1/"
 }
 
 data class Token(
@@ -45,7 +45,6 @@ class SpotifyAPI(private val client: HttpClient) {
             header("Authorization", "Basic $clientCredentials")
             body = "grant_type=client_credentials"
         }
-        println(request)
         return Gson().fromJson(request, Token::class.java)
     }
 }
