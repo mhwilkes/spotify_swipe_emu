@@ -27,12 +27,12 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 ALBUM_ENDPOINT
                     .plus(id)
-                    .plus(if (market != null) "&market=$market" else "")
+                    .plus(if (market != null) "?market=$market" else "")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        println("Album Response: $response")
         return Gson().fromJson(response, typeToken)
     }
 

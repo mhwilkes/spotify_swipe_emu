@@ -102,6 +102,8 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         return Gson().fromJson(response, typeToken)
     }
 
+
+    // TODO FINISH IMPLEMENT
     // @GET
     // Scope required: PLAYLIST_READ_COLLABORATIVE("playlist-read-collaborative")
     // Requires scope: PLAYLIST_READ_PRIVATE("playlist-read-private")
@@ -109,26 +111,29 @@ class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
         user_id: String,
         limit: Int = 20,
         offset: Int = 0
-    ): Page<PlaylistSimple> {
-
+    ): Page<PlaylistSimple>? {
+        return null
     }
 
+    // TODO FINISH IMPLEMENT
     // @GET
     suspend fun getPlaylistCoverImage(
         playlist_id: String
-    ): Array<Image> {
-
+    ): Array<Image>? {
+        return null
     }
 
+    // TODO FINISH IMPLEMENT
     // @GET
     suspend fun getPlaylist(
         playlist_id: String,
         vararg fields: String? = arrayOf(),
         market: String? = null
-    ): Playlist {
-
+    ): Playlist? {
+        return null
     }
 
+    // TODO FINISH IMPLEMENT
     // @GET
     suspend fun getPlaylistTracks(
         playlist_id: String,

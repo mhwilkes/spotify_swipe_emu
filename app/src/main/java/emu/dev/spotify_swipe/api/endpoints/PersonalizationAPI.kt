@@ -2,10 +2,11 @@ package emu.dev.spotify_swipe.api.endpoints
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import emu.dev.spotify_swipe.api.data.*
+import emu.dev.spotify_swipe.api.data.Album
+import emu.dev.spotify_swipe.api.data.Artist
+import emu.dev.spotify_swipe.api.data.Page
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 import io.ktor.client.request.accept
-import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType

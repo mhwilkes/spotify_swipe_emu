@@ -45,7 +45,7 @@ class SpotifyAPI(private val client: HttpClient) {
             header("Authorization", "Basic $clientCredentials")
             body = "grant_type=client_credentials"
         }
-
+        println(request)
         return Gson().fromJson(request, Token::class.java)
     }
 }
