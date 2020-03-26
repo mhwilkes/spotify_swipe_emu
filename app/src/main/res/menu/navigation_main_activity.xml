@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/reload"
+        android:title="@string/reload"
+        />
+
+    <item
+        android:id="@+id/add_card_to_first"
+        android:title="@string/add_card_to_first"
+        />
+
+    <item
+        android:id="@+id/add_card_to_last"
+        android:title="@string/add_card_to_last"
+        />
+
+    <item
+        android:id="@+id/remove_card_from_first"
+        android:title="@string/remove_card_from_first"
+        />
+
+    <item
+        android:id="@+id/remove_card_from_last"
+        android:title="@string/remove_card_from_last"
+        />
+
+    <item
+        android:id="@+id/replace_first_card"
+        android:title="@string/replace_first_card"
+        />
+
+    <item
+        android:id="@+id/swap_first_for_last"
+        android:title="@string/swap_first_for_last"
+        />
+
+</menu>
