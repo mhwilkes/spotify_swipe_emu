@@ -1,58 +1,54 @@
 package emu.dev.spotify_swipe
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationRequest.Builder
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE
-import emu.dev.spotify_swipe.api.endpoints.AlbumAPI
-import emu.dev.spotify_swipe.api.spotify.SpotifyAPI
-import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 import emu.dev.spotify_swipe.api.spotify.SpotifyScope
-import io.ktor.client.HttpClient
-import io.ktor.client.features.json.GsonSerializer
-import io.ktor.client.features.json.JsonFeature
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        val client = HttpClient {
-            install(JsonFeature) {
-                serializer = GsonSerializer {
-                    serializeNulls()
-                    disableHtmlEscaping()
-                    setPrettyPrinting()
-                }
-            }
-        }
+    override fun onStart() {
+        super.onStart()
 
-        val API = SpotifyAPI(client)
         val button = findViewById<Button>(R.id.login)
+        val text = findViewById<TextView>(R.id.info)
+        button.visibility = View.INVISIBLE
 
-        button.setOnClickListener(this::onLoginClick)
-
-        GlobalScope.launch {
-            println(
-                AlbumAPI(
-                    SpotifyRequest(
-                        client,
-                        API.clientCredentialsRequest()
-                    )
-                ).requestAlbumTracks("0sNOF9WDwhWunNAHPD3Baj")
-            )
+        val pm = packageManager
+        val isSpotifyInstalled = try {
+            pm.getPackageInfo("com.spotify.music", 0)
+            true
+        } catch (err: PackageManager.NameNotFoundException) {
+            Log.e(err.message, "Spotify Not Installed")
+            false
         }
-        println(intent.getStringExtra("response"))
+
+        if (!isSpotifyInstalled) {
+            text.text = "This app requires Spotify to be installed on your device"
+            button.text = "Download Spotify"
+            button.visibility = View.VISIBLE
+            button.setOnClickListener(this::onDownloadClick)
+        } else {
+            text.text = "This app requires you to log into Spotify"
+            button.text = "Login Now"
+            button.visibility = View.VISIBLE
+            button.setOnClickListener(this::onLoginClick)
+        }
     }
 
     private fun onLoginClick(view: View) {
@@ -71,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request)
     }
 
+    private fun onDownloadClick(view: View) {
+        AuthorizationClient.openDownloadSpotifyActivity(this)
+    }
+
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
@@ -84,24 +84,14 @@ class MainActivity : AppCompatActivity() {
                 AuthorizationClient.getResponse(resultCode, intent)
 
             when (response.type) {
-                AuthorizationResponse.Type.TOKEN -> {
-                    println(response.accessToken)
-                }
                 AuthorizationResponse.Type.CODE -> {
-                    println(response.code)
+                    Log.i("Response Code: ", response.code)
+                    // TODO change activity with intent
                 }
                 AuthorizationResponse.Type.ERROR -> {
-                    println(response.error)
+                    Log.e("Response Error: ", response.error)
                 }
-                AuthorizationResponse.Type.UNKNOWN -> {
-                    println("Busted")
-                }
-                AuthorizationResponse.Type.EMPTY -> {
-                    println("Empty")
-                }
-                else -> {
-                    println("Busted")
-                }
+                else -> Log.e("Auth Bound", "Auth did not respond as expected")
             }
         }
     }
