@@ -1,5 +1,6 @@
 package emu.dev.spotify_swipe
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,14 +17,14 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.navigation.NavigationView
 import com.yuyakaido.android.cardstackview.*
-import emu.dev.spotify_swipe.api.card.Card
-import emu.dev.spotify_swipe.api.card.CardDiffCallback
-import emu.dev.spotify_swipe.api.card.CardStackAdapter
+import com.yuyakaido.android.cardstackview.Direction.*
+import emu.dev.spotify_swipe.card.Card
+import emu.dev.spotify_swipe.card.CardDiffCallback
+import emu.dev.spotify_swipe.card.CardStackAdapter
 import java.util.*
 
 
-
-class TutorialActivity : AppCompatActivity(), CardStackListener{
+class TutorialActivity : AppCompatActivity(), CardStackListener {
 
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
@@ -52,8 +53,10 @@ class TutorialActivity : AppCompatActivity(), CardStackListener{
 
     override fun onCardSwiped(direction: Direction) {
         Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
-        if (manager.topPosition == adapter.itemCount - 5) {
-            paginate()
+        if (manager.topPosition == 4) {
+            Log.d("CardStackView Tutorial", "Moving to recommendations")
+            val intent = Intent(this, RecommendationActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -75,12 +78,19 @@ class TutorialActivity : AppCompatActivity(), CardStackListener{
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
     }
 
+
     private fun setupNavigation() {
         // Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         // DrawerLayout
-        val actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
         actionBarDrawerToggle.syncState()
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
@@ -147,7 +157,7 @@ class TutorialActivity : AppCompatActivity(), CardStackListener{
         manager.setScaleInterval(0.95f)
         manager.setSwipeThreshold(0.3f)
         manager.setMaxDegree(20.0f)
-        manager.setDirections(Direction.HORIZONTAL)
+        manager.setDirections(listOf(Left, Right, Top))
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(true)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
@@ -163,7 +173,7 @@ class TutorialActivity : AppCompatActivity(), CardStackListener{
 
     private fun paginate() {
         val old = adapter.getCards()
-        val new : List<Card> = old.plus(createCard())
+        val new: List<Card> = old.plus(createCard())
         val callback = CardDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
         adapter.setCards(new)
@@ -277,16 +287,34 @@ class TutorialActivity : AppCompatActivity(), CardStackListener{
 
     private fun createCards(): List<Card> {
         val cards = ArrayList<Card>()
-        cards.add(Card(text = "Yasaka Shrine", description = "Kyoto", imageURL = "https://source.unsplash.com/Xq1ntWruZQI/600x800"))
-        cards.add(Card(text = "Fushimi Inari Shrine", description = "Kyoto", imageURL = "https://source.unsplash.com/NYyCqdBOKwc/600x800"))
-        cards.add(Card(text = "Bamboo Forest", description = "Kyoto", imageURL = "https://source.unsplash.com/buF62ewDLcQ/600x800"))
-        cards.add(Card(text = "Brooklyn Bridge", description = "New York", imageURL = "https://source.unsplash.com/THozNzxEP3g/600x800"))
-        cards.add(Card(text = "Empire State Building", description = "New York", imageURL = "https://source.unsplash.com/USrZRcRS2Lw/600x800"))
-        cards.add(Card(text = "The statue of Liberty", description = "New York", imageURL = "https://source.unsplash.com/PeFk7fzxTdk/600x800"))
-        cards.add(Card(text = "Louvre Museum", description = "Paris", imageURL = "https://source.unsplash.com/LrMWHKqilUw/600x800"))
-        cards.add(Card(text = "Eiffel Tower", description = "Paris", imageURL = "https://source.unsplash.com/HN-5Z6AmxrM/600x800"))
-        cards.add(Card(text = "Big Ben", description = "London", imageURL = "https://source.unsplash.com/CdVAUADdqEc/600x800"))
-        cards.add(Card(text = "Great Wall of China", description = "China", imageURL = "https://source.unsplash.com/AWh9C-QjhE4/600x800"))
+        cards.add(
+            Card(
+                text = "Welcome to Spotify Swipe",
+                description = "Swipe to Start",
+                imageURL = "https://source.unsplash.com/Xq1ntWruZQI/600x800"
+            )
+        )
+        cards.add(
+            Card(
+                text = "Swipe Left",
+                description = "If you don't like the song",
+                imageURL = "https://source.unsplash.com/NYyCqdBOKwc/600x800"
+            )
+        )
+        cards.add(
+            Card(
+                text = "Swipe Right",
+                description = "If you do like the song",
+                imageURL = "https://source.unsplash.com/buF62ewDLcQ/600x800"
+            )
+        )
+        cards.add(
+            Card(
+                text = "Swipe to Get Started",
+                description = "Lets Go!",
+                imageURL = "https://source.unsplash.com/THozNzxEP3g/600x800"
+            )
+        )
         return cards
     }
 }

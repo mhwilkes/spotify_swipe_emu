@@ -1,4 +1,4 @@
-package emu.dev.spotify_swipe.api.card
+package emu.dev.spotify_swipe.card
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,7 @@ class CardStackAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val card = cards[position]
-        holder.text.text = "${card.id}. ${card.description}"
+        holder.text.text = card.text
         holder.description.text = card.description
         Glide.with(holder.image)
             .load(card.imageURL)
@@ -35,6 +35,10 @@ class CardStackAdapter(
         val text: TextView = view.findViewById(R.id.item_name)
         var description: TextView = view.findViewById(R.id.item_city)
         var image: ImageView = view.findViewById(R.id.item_image)
+    }
+
+    fun isEmpty(): Boolean {
+        return cards.isEmpty()
     }
 
     fun setCards(cards: List<Card>) {

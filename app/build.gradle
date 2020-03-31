@@ -53,6 +53,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
+    implementation 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation "io.ktor:ktor-client-core:$ktor_version"

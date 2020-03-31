@@ -17,7 +17,7 @@ enum class IncludeGroups(val uri: String){
 
 data class AlbumSimple(
     @Transient
-    val album_group: String?,
+    val album_group: String,
     val album_type: String,
     val artists: List<ArtistSimple>,
     val available_markets: List<String>,

@@ -86,9 +86,9 @@ class MainActivity : AppCompatActivity() {
             when (response.type) {
                 AuthorizationResponse.Type.CODE -> {
                     Log.i("Response Code: ", response.code)
-                    // TODO change activity with intent
-                    val intent = Intent(this, TutorialActivity::class.java)
-                    startActivity(intent)
+                    intent?.putExtra("responsecode", response.code)
+                    val new_intent = Intent(this, TutorialActivity::class.java)
+                    startActivity(new_intent)
                 }
                 AuthorizationResponse.Type.ERROR -> {
                     Log.e("Response Error: ", response.error)

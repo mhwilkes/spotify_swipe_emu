@@ -1,4 +1,4 @@
-package emu.dev.spotify_swipe.api.card
+package emu.dev.spotify_swipe.card
 
 import androidx.recyclerview.widget.DiffUtil
 
