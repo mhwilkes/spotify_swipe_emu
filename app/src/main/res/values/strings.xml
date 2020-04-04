@@ -1,3 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <string name="app_name">Spotify Swipe</string>
+    <!-- App -->
+    <string name="app_name">CardStackView</string>
+
+    <!-- NavigationView -->
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+    <string name="reload">Reload</string>
+    <string name="add_card_to_first">Add card to first</string>
+    <string name="add_card_to_last">Add card to last</string>
+    <string name="remove_card_from_first">Remove card from first</string>
+    <string name="remove_card_from_last">Remove card from last</string>
+    <string name="replace_first_card">Replace first card</string>
+    <string name="swap_first_for_last">Swap first for last</string>
 </resources>
