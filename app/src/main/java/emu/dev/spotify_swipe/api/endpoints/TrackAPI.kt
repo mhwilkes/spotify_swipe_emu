@@ -86,6 +86,24 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
         return Gson().fromJson(response, Tracks::class.java).asList()
     }
 
+    suspend fun requestMultipleTracks(
+        ids: List<String>,
+        market: String? = null
+    ): List<Track> {
+        val response =
+            spotifyRequest.client.get<String>(
+                TRACK_ENDPOINT
+                    .plus("?ids=")
+                    .plus(ids.joinToString(limit = 20, separator = "%2C"))
+                    .plus(if (market != null) "&market=$market" else "")
+            ) {
+                accept(ContentType.Application.Json)
+                header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
+            }
+
+        return Gson().fromJson(response, Tracks::class.java).asList()
+    }
+
     suspend fun requestTrack(
         id: String,
         market: String? = null

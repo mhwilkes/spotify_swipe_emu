@@ -9,10 +9,10 @@ import emu.dev.spotify_swipe.api.data.Track
 class SwipeCard(track: Track) {
 
     val card_track: Track
-    val song_name: String?
+    val song_name: String
     val song_artists: List<ArtistSimple>
     val song_cover: List<Image>
-    var image_url: String? = null
+    var image_url: String
     val song_preview_url: String
     val song_ID: String
     val song_url: String
