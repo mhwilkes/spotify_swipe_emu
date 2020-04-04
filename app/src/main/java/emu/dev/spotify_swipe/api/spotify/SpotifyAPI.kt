@@ -7,6 +7,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import java.io.Serializable
 
 data class SpotifyRequest(val client: HttpClient, val token: Token) {
     val DEFAULT_ENDPOINT: String = "https://api.spotify.com/v1/"
@@ -16,13 +17,8 @@ data class Token(
     val access_token: String,
     val token_type: String,
     val expires_in: Int,
-    val scope: String
-)
-
-enum class LoginMethod(val uri: String) {
-    LOGIN_ACTIVITY("login-activity"),
-    WEB_LOGIN("web-login"),
-}
+    var scope: String
+) : Serializable
 
 class SpotifyAPI(private val client: HttpClient) {
     private val REQUEST_CODE = 1483

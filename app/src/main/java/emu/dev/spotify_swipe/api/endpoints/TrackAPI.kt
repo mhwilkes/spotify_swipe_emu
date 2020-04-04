@@ -12,15 +12,15 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val TRACK_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/tracks/")
+            .plus("tracks/")
 
     private val AUDIO_ANALYSIS_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/audio-analysis/")
+            .plus("audio-analysis/")
 
     private val AUDIO_FEATURES_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/audio-features/")
+            .plus("audio-features/")
 
     suspend fun requestTrackAudioAnalysis(
         id: String

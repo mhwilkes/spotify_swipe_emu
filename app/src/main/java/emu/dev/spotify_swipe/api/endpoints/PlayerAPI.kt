@@ -14,7 +14,7 @@ class PlayerAPI(private val spotifyRequest: SpotifyRequest) {
     // TODO might need streaming scope for playback. Spotify says its only for web playback sdk though
 
     val PLAYER_ENDPOINT = spotifyRequest.DEFAULT_ENDPOINT
-        .plus("/me/player")
+        .plus("me/player")
 
     // @POST
     suspend fun addToPlaybackQueue(

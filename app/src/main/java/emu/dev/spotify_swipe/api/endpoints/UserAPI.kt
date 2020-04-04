@@ -20,7 +20,7 @@ class UserAPI(private val spotifyRequest: SpotifyRequest) {
         val typeToken = object : TypeToken<UserPrivate>() {}.type
         val response = spotifyRequest.client.get<String>(
             spotifyRequest.DEFAULT_ENDPOINT
-                .plus("/me")
+                .plus("me")
         ) {
             accept(ContentType.Application.Json)
             header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
@@ -35,7 +35,7 @@ class UserAPI(private val spotifyRequest: SpotifyRequest) {
         val typeToken = object : TypeToken<UserPublic>() {}.type
         val response = spotifyRequest.client.get<String>(
             spotifyRequest.DEFAULT_ENDPOINT
-                .plus("/users/$user_id")
+                .plus("users/$user_id")
         ) {
             accept(ContentType.Application.Json)
             header("Authorization", "Bearer ${spotifyRequest.token.access_token}")

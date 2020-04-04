@@ -12,7 +12,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
 
     val FOLLOW_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/me/following/")
+            .plus("me/following/")
 
 
     // @GET

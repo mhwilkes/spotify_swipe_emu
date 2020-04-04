@@ -13,7 +13,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val ARTIST_ENDPOINT: String =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/artists/")
+            .plus("artists/")
 
     suspend fun requestArtist(
         id: String

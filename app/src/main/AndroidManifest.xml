@@ -25,6 +25,8 @@
 
         <activity
             android:name=".TutorialActivity"/>
+        <activity
+            android:name=".PopupCardActivity"/>
 
 
         <activity android:name=".MainActivity">

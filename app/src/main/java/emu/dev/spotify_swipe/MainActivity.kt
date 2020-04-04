@@ -14,8 +14,11 @@ import com.spotify.sdk.android.auth.AuthorizationRequest.Builder
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE
 import emu.dev.spotify_swipe.api.spotify.SpotifyScope
+import emu.dev.spotify_swipe.api.spotify.Token
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var token : Token
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             AuthorizationResponse.Type.CODE,
             REDIRECT_URI
         )
+
         builder.setScopes(arrayOf(SpotifyScope.APP_REMOTE_CONTROL.uri))
         builder.setShowDialog(true)
         val request: AuthorizationRequest = builder.build()
@@ -86,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             when (response.type) {
                 AuthorizationResponse.Type.CODE -> {
                     Log.i("Response Code: ", response.code)
-                    intent?.putExtra("responsecode", response.code)
+                    intent?.putExtra("response_code", response.code)
                     val new_intent = Intent(this, TutorialActivity::class.java)
                     startActivity(new_intent)
                 }

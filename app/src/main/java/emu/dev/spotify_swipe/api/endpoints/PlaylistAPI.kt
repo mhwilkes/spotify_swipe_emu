@@ -12,7 +12,7 @@ import io.ktor.http.ContentType
 class PlaylistAPI(private val spotifyRequest: SpotifyRequest) {
 
     val PLAYLIST_ENDPOINT = spotifyRequest.DEFAULT_ENDPOINT
-        .plus("/playlists")
+        .plus("playlists")
 
     // @POST
     // Scope required: PLAYLIST_MODIFY_PUBLIC("playlist-modify-public")

@@ -16,7 +16,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val BROWSE_ENDPOINT: String =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/browse/")
+            .plus("browse/")
 
     // TODO find out if first query string needs to be prepended with ? or it can be &
 
@@ -152,7 +152,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 spotifyRequest.DEFAULT_ENDPOINT
                     .plus("recommendations")
-                    .plus("&limit=$limit")
+                    .plus("?limit=$limit")
                     .plus(if (market != null) "&market=$market" else "")
                     .plus(max_?.joinToString(separator = "&") ?: "")
                     .plus(min_?.joinToString(separator = "&") ?: "")

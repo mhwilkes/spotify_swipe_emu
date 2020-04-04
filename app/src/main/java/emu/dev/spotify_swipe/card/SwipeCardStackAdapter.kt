@@ -31,6 +31,10 @@ class SwipeCardStackAdapter(
         }
     }
 
+    fun getAtPosition(position: Int): SwipeCard {
+        return cards[position]
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val text: TextView = view.findViewById(R.id.item_name)
         var description: TextView = view.findViewById(R.id.item_city)

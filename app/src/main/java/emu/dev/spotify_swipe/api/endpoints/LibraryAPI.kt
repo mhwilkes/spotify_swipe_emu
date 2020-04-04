@@ -10,7 +10,7 @@ import io.ktor.http.ContentType
 class LibraryAPI(private val spotifyRequest: SpotifyRequest) {
 
     val LIBRARY_ENDPOINT = spotifyRequest.DEFAULT_ENDPOINT
-        .plus("/me")
+        .plus("me")
 
 
     // @GET

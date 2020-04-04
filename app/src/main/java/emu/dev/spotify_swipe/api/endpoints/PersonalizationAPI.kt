@@ -28,7 +28,7 @@ class PersonalizationAPI(private val spotifyRequest: SpotifyRequest) {
     ): Page<Any> {
        val response = spotifyRequest.client.get<String>(
             spotifyRequest.DEFAULT_ENDPOINT
-                .plus("/me/top/${type.uri}")
+                .plus("me/top/${type.uri}")
                 .plus("?limit=$limit")
                 .plus("&offset=$offset")
                 .plus(if (!time_range.isNullOrBlank()) "&time_range=$time_range" else "")
