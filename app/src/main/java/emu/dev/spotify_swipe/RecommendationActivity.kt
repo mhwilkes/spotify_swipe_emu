@@ -1,6 +1,5 @@
 package emu.dev.spotify_swipe
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,12 +21,12 @@ import emu.dev.spotify_swipe.api.endpoints.TrackAPI
 import emu.dev.spotify_swipe.api.spotify.SpotifyAPI
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
 import emu.dev.spotify_swipe.api.spotify.Token
-import emu.dev.spotify_swipe.card.*
+import emu.dev.spotify_swipe.card.SwipeCard
+import emu.dev.spotify_swipe.card.SwipeCardDiffCallback
+import emu.dev.spotify_swipe.card.SwipeCardStackAdapter
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
@@ -45,7 +44,6 @@ class RecommendationActivity : AppCompatActivity() {
 
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, CardStackListener.DEFAULT) }
-
     private val adapter by lazy { SwipeCardStackAdapter() }
 
 
@@ -58,23 +56,17 @@ class RecommendationActivity : AppCompatActivity() {
         val reload: FloatingActionButton = findViewById(R.id.rewind_button)
 
         setupCardStackView()
-
-        cardStackView.setOnTouchListener(OnTouchListener())
-
+        cardStackView.setOnTouchListener(onTouchListener())
         like.setOnClickListener { cardStackView.swipe() }
-
         dislike.setOnClickListener { cardStackView.swipe() }
-
         reload.setOnClickListener { paginate() }
-
-
     }
 
     private val gestureDetector = GestureDetector(
         baseContext,
         object : SimpleOnGestureListener() {
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                val intent = Intent(applicationContext, PopupCardActivity::class.java)
+                val intent = Intent(baseContext, PopupCardActivity::class.java)
                 val card: SwipeCard = adapter.getAtPosition(manager.topPosition)
                 intent.putExtra("song_name", card.song_name)
                 intent.putExtra("artist_name", card.song_artists[0].name)
@@ -82,6 +74,7 @@ class RecommendationActivity : AppCompatActivity() {
                 intent.putExtra("preview_url", card.song_preview_url)
                 intent.putExtra("song_url", card.song_url)
                 intent.putExtra("album_cover", card.image_url)
+                intent.putExtra("uri", card.uri)
                 startActivity(intent)
                 return true
             }
@@ -91,7 +84,7 @@ class RecommendationActivity : AppCompatActivity() {
     // Define all things needed for API interaction.
 
 
-    private fun OnTouchListener(): View.OnTouchListener {
+    private fun onTouchListener(): View.OnTouchListener {
         return View.OnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
         }
@@ -111,7 +104,7 @@ class RecommendationActivity : AppCompatActivity() {
         )
         val card: SwipeCard = adapter.getAtPosition(manager.topPosition - 1) // Get the swiped card.
 
-        if (manager.topPosition == adapter.itemCount) { // Get more cards if needed.
+        if (manager.itemCount == 1) { // Get more cards if needed.
             paginate()
         }
     }
@@ -164,8 +157,6 @@ class RecommendationActivity : AppCompatActivity() {
 
     private fun createCards(): List<SwipeCard> = runBlocking {
         val cards: MutableList<SwipeCard> = ArrayList()
-
-
         val mAccessToken: Token = SpotifyAPI(client).clientCredentialsRequest()
         val request = SpotifyRequest(client, mAccessToken)
 
@@ -178,21 +169,13 @@ class RecommendationActivity : AppCompatActivity() {
             )
 
         val tracks: List<TrackSimple> = recommendations.tracks
-
-
         val trackIds: List<String> = tracks.map { x -> x.id }
-
-        println(trackIds)
 
         val trackFull: List<Track> =
             TrackAPI(request).requestMultipleTracks(trackIds)
 
-
-        println(trackFull)
-
         for (t in trackFull)
             cards.add(SwipeCard(t))
-
 
         return@runBlocking cards
     }

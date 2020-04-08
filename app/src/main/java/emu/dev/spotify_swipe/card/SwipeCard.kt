@@ -1,5 +1,6 @@
 package emu.dev.spotify_swipe.card
 
+import android.net.Uri
 import emu.dev.spotify_swipe.api.data.AlbumSimple
 import emu.dev.spotify_swipe.api.data.ArtistSimple
 import emu.dev.spotify_swipe.api.data.Image
@@ -17,6 +18,7 @@ class SwipeCard(track: Track) {
     val song_ID: String
     val song_url: String
     val albumSimple: AlbumSimple
+    val uri: String
 
     /**
      * Takes Track Object and sets essential Data for Card Object
@@ -33,5 +35,6 @@ class SwipeCard(track: Track) {
         song_preview_url = track.preview_url
         song_ID = track.id
         albumSimple = track.album
+        uri = track.uri
     }
 }

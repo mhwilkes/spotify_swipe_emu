@@ -1,7 +1,9 @@
 package emu.dev.spotify_swipe
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -14,20 +16,22 @@ import io.ktor.utils.io.errors.IOException
 
 class PopupCardActivity : AppCompatActivity() {
     // Media player to play song samples.
-    private val player = MediaPlayer()
+    private var player = MediaPlayer()
 
     // Define our views.
-    private val song_name: TextView = findViewById(R.id.song_name)
-    private val artist_name: TextView = findViewById(R.id.artist_name)
-    private val album_name: TextView = findViewById(R.id.album_name)
-    private val is_preview: TextView = findViewById(R.id.is_preview)
-    private var album_cover: ImageView = findViewById(R.id.album_cover)
-    private val mFloatingActionButton: FloatingMusicActionButton = findViewById(R.id.pause_play)
-    private var seekPos = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popup_card)
         val intent = intent
+
+        val song_name: TextView = findViewById(R.id.song_name)
+        val artist_name: TextView = findViewById(R.id.artist_name)
+        val album_name: TextView = findViewById(R.id.album_name)
+        val is_preview: TextView = findViewById(R.id.is_preview)
+        val album_cover: ImageView = findViewById(R.id.album_cover)
+        val mFloatingActionButton: FloatingMusicActionButton = findViewById(R.id.pause_play)
+        var seekPos = 0
 
         // Update text views with information related to the track.
         song_name.text = intent.getStringExtra("song_name")
@@ -39,37 +43,22 @@ class PopupCardActivity : AppCompatActivity() {
             .load(intent.getStringExtra("album_cover"))
             .into(album_cover)
 
-
-        // Music player stuff.
-        try {
-            if (intent.getStringExtra("preview_url") != null) {
-                player.setDataSource(intent.getStringExtra("preview_url"))
-                player.prepareAsync()
-                player.setVolume(.7f, .7f)
-                player.setOnPreparedListener { player.start() }
-            } else {
-                is_preview.setTypeface(Typeface.DEFAULT_BOLD)
-                is_preview.text = "No preview available!"
-                mFloatingActionButton.setOnMusicFabClickListener(object :
-                    FloatingMusicActionButton.OnMusicFabClickListener {
-                    override fun onClick(view: View) {
-                        if (player.isPlaying) {
-                            player.pause()
-                            seekPos = player.currentPosition
-                            mFloatingActionButton.changeMode(FloatingMusicActionButton.Mode.PAUSE_TO_PLAY)
-                        } else {
-                            player.start()
-                            player.seekTo(seekPos)
-                            mFloatingActionButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_PAUSE)
-                        }
-                    }
-
-                })
-
+        mFloatingActionButton.setOnMusicFabClickListener(object :
+            FloatingMusicActionButton.OnMusicFabClickListener {
+            override fun onClick(view: View) {
+                FloatingMusicActionButton.Mode.PLAY_TO_PAUSE
+                val callIntent: Intent = Uri.parse(intent.getStringExtra("uri")).let { uri ->
+                    Intent(Intent.ACTION_VIEW, uri)
+                }
+                startActivity(callIntent)
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+        })
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        FloatingMusicActionButton.Mode.PAUSE_TO_PLAY
     }
 
     override fun onDestroy() {

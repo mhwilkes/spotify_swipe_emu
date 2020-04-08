@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import emu.dev.spotify_swipe.R
@@ -26,9 +25,7 @@ class SwipeCardStackAdapter(
         Glide.with(holder.image)
             .load(card.image_url)
             .into(holder.image)
-        holder.itemView.setOnClickListener { v ->
-            Toast.makeText(v.context, card.song_ID, Toast.LENGTH_SHORT).show()
-        }
+
     }
 
     fun getAtPosition(position: Int): SwipeCard {
