@@ -23,7 +23,7 @@ import emu.dev.spotify_swipe.card.CardDiffCallback
 import emu.dev.spotify_swipe.card.CardStackAdapter
 import java.util.*
 
-
+/*
 class TutorialActivity : AppCompatActivity(), CardStackListener {
 
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
@@ -318,3 +318,4 @@ class TutorialActivity : AppCompatActivity(), CardStackListener {
         return cards
     }
 }
+ */

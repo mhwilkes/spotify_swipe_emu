@@ -13,7 +13,15 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val ARTIST_ENDPOINT: String =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/artists/")
+            .plus("artists/")
+
+    // used for unit testing
+    private var testResponse = ""
+    fun getTestResponse(): String
+    {
+        return testResponse
+    }
+
 
     suspend fun requestArtist(
         id: String
@@ -27,7 +35,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -44,7 +52,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT
                     .plus(id)
-                    .plus("albums/")
+                    .plus("/albums")
                     .plus(include_groups.joinToString(separator = "%2C"))
                     .plus(if (country != null) "&market=$country" else "")
                     .plus("&limit=$limit")
@@ -53,7 +61,7 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
 
     }
@@ -67,13 +75,13 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT
                     .plus(id)
-                    .plus("top-tracks/")
-                    .plus(if (country != null) "&market=$country" else "")
+                    .plus("/top-tracks")
+                    .plus(if (country != null) "?market=$country" else "")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Tracks::class.java).asList()
     }
 
@@ -84,12 +92,12 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT
                     .plus(id)
-                    .plus("related-artists/")
+                    .plus("/related-artists/")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Artists::class.java).asList()
     }
 
@@ -99,12 +107,13 @@ class ArtistAPI(private val spotifyRequest: SpotifyRequest) {
         val response =
             spotifyRequest.client.get<String>(
                 ARTIST_ENDPOINT
+                    .plus("?ids=")
                     .plus(ids.joinToString(separator = "%2C"))
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Artists::class.java).asList()
     }
 }

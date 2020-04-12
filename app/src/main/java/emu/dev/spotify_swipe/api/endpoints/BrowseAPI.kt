@@ -16,7 +16,14 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val BROWSE_ENDPOINT: String =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/browse/")
+            .plus("browse/")
+
+    // used for unit testing
+    private var testResponse = ""
+    fun getTestResponse(): String
+    {
+        return testResponse
+    }
 
     // TODO find out if first query string needs to be prepended with ? or it can be &
 
@@ -29,7 +36,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
         val response =
             spotifyRequest.client.get<String>(
                 BROWSE_ENDPOINT
-                    .plus("/categories/")
+                    .plus("categories/")
                     .plus(category_id)
                     .plus(if (country != null) "?country=$country" else "")
                     .plus(if (locale != null) "&locale=$locale" else "")
@@ -37,7 +44,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Category::class.java)
     }
 
@@ -51,16 +58,17 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
         val response =
             spotifyRequest.client.get<String>(
                 BROWSE_ENDPOINT
+                    .plus("categories/")
                     .plus(category_id)
                     .plus("/playlists")
-                    .plus(if (country != null) "&country=$country" else "")
+                    .plus(if (country != null) "?country=$country" else "")
                     .plus(if (locale != null) "&locale=$locale" else "")
                     .plus("&offset=$offset")
             ) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -74,8 +82,8 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
         val response =
             spotifyRequest.client.get<String>(
                 BROWSE_ENDPOINT
-                    .plus("/categories")
-                    .plus(if (country != null) "&country=$country" else "")
+                    .plus("categories")
+                    .plus(if (country != null) "?country=$country" else "")
                     .plus(if (locale != null) "&locale=$locale" else "")
                     .plus("&limit=$limit")
                     .plus("&offset=$offset")
@@ -83,7 +91,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -98,7 +106,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
         val response =
             spotifyRequest.client.get<String>(
                 BROWSE_ENDPOINT
-                    .plus("/featured-playlists")
+                    .plus("featured-playlists")
                     .plus(if (locale != null) "&locale=$locale" else "")
                     .plus(if (country != null) "&country=$country" else "")
                     .plus(if (timestamp != null) "&timestamp=${timestamp.encode8601}" else "")
@@ -109,7 +117,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -152,7 +160,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
             spotifyRequest.client.get<String>(
                 spotifyRequest.DEFAULT_ENDPOINT
                     .plus("recommendations")
-                    .plus("&limit=$limit")
+                    .plus("?limit=$limit")
                     .plus(if (market != null) "&market=$market" else "")
                     .plus(max_?.joinToString(separator = "&") ?: "")
                     .plus(min_?.joinToString(separator = "&") ?: "")
@@ -177,7 +185,7 @@ class BrowseAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 }

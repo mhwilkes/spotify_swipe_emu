@@ -14,7 +14,7 @@ import com.spotify.sdk.android.auth.AuthorizationRequest.Builder
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE
 import emu.dev.spotify_swipe.api.spotify.SpotifyScope
-
+/*
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,3 +99,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+*/

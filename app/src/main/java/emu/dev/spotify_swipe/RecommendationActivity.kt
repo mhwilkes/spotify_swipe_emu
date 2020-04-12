@@ -12,7 +12,7 @@ import com.yuyakaido.android.cardstackview.CardStackView
 import emu.dev.spotify_swipe.api.spotify.Token
 import emu.dev.spotify_swipe.card.CardStackAdapter
 import emu.dev.spotify_swipe.card.SwipeCard
-
+/*
 
 class RecommendationActivity : AppCompatActivity() {
     private val manager: CardStackLayoutManager
@@ -47,3 +47,5 @@ class RecommendationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 }
+
+*/

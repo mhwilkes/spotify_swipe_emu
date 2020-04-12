@@ -12,15 +12,22 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
 
     private val TRACK_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/tracks/")
+            .plus("tracks/")
 
     private val AUDIO_ANALYSIS_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/audio-analysis/")
+            .plus("audio-analysis/")
 
     private val AUDIO_FEATURES_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/audio-features/")
+            .plus("audio-features/")
+
+    // used for unit testing
+    private var testResponse = ""
+    fun getTestResponse(): String
+    {
+        return testResponse
+    }
 
     suspend fun requestTrackAudioAnalysis(
         id: String
@@ -33,7 +40,7 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, AudioAnalysis::class.java)
     }
 
@@ -48,7 +55,7 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, AudioFeature::class.java)
     }
 
@@ -82,7 +89,7 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Tracks::class.java).asList()
     }
 
@@ -98,7 +105,7 @@ class TrackAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Track::class.java)
     }
 }

@@ -10,9 +10,16 @@ import io.ktor.http.ContentType
 
 class FollowAPI(private val spotifyRequest: SpotifyRequest) {
 
+    // used for unit testing
+    private var testResponse = ""
+    fun getTestResponse(): String
+    {
+        return testResponse
+    }
+
     val FOLLOW_ENDPOINT =
         spotifyRequest.DEFAULT_ENDPOINT
-            .plus("/me/following/")
+            .plus("me/following/")
 
 
     // @GET
@@ -32,7 +39,7 @@ class FollowAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
