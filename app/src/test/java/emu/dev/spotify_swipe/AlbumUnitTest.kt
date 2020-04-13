@@ -1,15 +1,23 @@
 package emu.dev.spotify_swipe
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import emu.dev.spotify_swipe.api.data.Album
+import emu.dev.spotify_swipe.api.data.Artist
+import emu.dev.spotify_swipe.api.data.ArtistSimple
 import emu.dev.spotify_swipe.api.endpoints.AlbumAPI
 import emu.dev.spotify_swipe.api.spotify.SpotifyAPI
 import emu.dev.spotify_swipe.api.spotify.SpotifyRequest
+import emu.dev.spotify_swipe.api.spotify.Token
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
+import io.ktor.http.cio.parseResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
 import org.junit.Test
+
+import org.junit.Assert.*
 
 class AlbumUnitTest {
 
@@ -435,8 +443,9 @@ class AlbumUnitTest {
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val albumAPI = AlbumAPI(spotifyRequest)
         val requestOutput = albumAPI.requestAlbum("0sNOF9WDwhWunNAHPD3Baj")
+        val testOutput = albumAPI.getTestResponse()
 
-        assertEquals(correctAlbum, requestOutput)
+        assertEquals(correctAlbum, testOutput)
     }
 
     @Test
@@ -514,8 +523,9 @@ class AlbumUnitTest {
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val albumAPI = AlbumAPI(spotifyRequest)
         val requestOutput = albumAPI.requestAlbumTracks("6akEvsycLGftJxYudPjmqK",2,0)
+        val testOutput = albumAPI.getTestResponse()
 
-        assertEquals(correctAlbum, requestOutput)
+        assertEquals(correctAlbum, testOutput)
     }
 
     @Test
@@ -532,10 +542,10 @@ class AlbumUnitTest {
 
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val albumAPI = AlbumAPI(spotifyRequest)
-        val requestOutput = albumAPI.requestAlbums("41MnTivkwTO3UUJ8DrqEJJ","6JWc4iAiJ9FjyK0B59ABb4","6UXCm6bOO4gFlDQZV5yL37")
+        albumAPI.requestAlbums("41MnTivkwTO3UUJ8DrqEJJ","6JWc4iAiJ9FjyK0B59ABb4","6UXCm6bOO4gFlDQZV5yL37")
+        val testOutput = albumAPI.getTestResponse()
 
-
-        assertEquals(correctAlbum, requestOutput)
+        assertEquals(correctAlbum, testOutput)
     }
 
 }

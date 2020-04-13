@@ -18,6 +18,13 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
         spotifyRequest.DEFAULT_ENDPOINT
             .plus("albums/")
 
+    // used for unit testing
+    private var testResponse = ""
+    fun getTestResponse(): String
+    {
+        return testResponse
+    }
+
     suspend fun requestAlbum(
         id: String,
         market: String? = null
@@ -32,7 +39,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -55,7 +62,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, typeToken)
     }
 
@@ -76,7 +83,7 @@ class AlbumAPI(private val spotifyRequest: SpotifyRequest) {
                 accept(ContentType.Application.Json)
                 header("Authorization", "Bearer ${spotifyRequest.token.access_token}")
             }
-
+        testResponse = response
         return Gson().fromJson(response, Albums::class.java).asList()
     }
 }

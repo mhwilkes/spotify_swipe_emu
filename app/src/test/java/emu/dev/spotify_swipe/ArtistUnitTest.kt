@@ -62,8 +62,8 @@ class ArtistUnitTest {
 
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val ArtistAPI = ArtistAPI(spotifyRequest)
-
-        val testOutput = ArtistAPI.requestArtist("0OdUWJ0sBjDrqHygGUXeCF")
+        ArtistAPI.requestArtist("0OdUWJ0sBjDrqHygGUXeCF")
+        val testOutput = ArtistAPI.getTestResponse()
         val trimOutput = testOutput.removeRange(0, 167)
         assertEquals(correctResponse, trimOutput)
     }
@@ -171,7 +171,8 @@ class ArtistUnitTest {
 
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val ArtistAPI = ArtistAPI(spotifyRequest)
-        val testOutput =  ArtistAPI.requestRelatedArtists("0OdUWJ0sBjDrqHygGUXeCF")
+        ArtistAPI.requestRelatedArtists("0OdUWJ0sBjDrqHygGUXeCF")
+        val testOutput = ArtistAPI.getTestResponse()
         val trimOutput = testOutput.removeRange(0,200)
         val trimmedOutput = trimOutput.removeRange(300, trimOutput.length-1)
         assertEquals(correctResponse, trimmedOutput)
@@ -195,8 +196,9 @@ class ArtistUnitTest {
 
         val spotifyRequest = SpotifyRequest(client, API.clientCredentialsRequest())
         val ArtistAPI = ArtistAPI(spotifyRequest)
-        val requestOutput = ArtistAPI.requestArtists("0oSGxfWSnnOXhD2fKuz2Gy","3dBVyJ7JuOMt4GE9607Qin")
-        val trimOutput = "requestOutput".removeRange(0,200)
+        ArtistAPI.requestArtists("0oSGxfWSnnOXhD2fKuz2Gy","3dBVyJ7JuOMt4GE9607Qin")
+        val testOutput = ArtistAPI.getTestResponse()
+        val trimOutput = testOutput.removeRange(0,200)
         val trimmedOutput = trimOutput.removeRange(250, trimOutput.length-1)
         assertEquals(correctResponse, trimmedOutput)
     }
